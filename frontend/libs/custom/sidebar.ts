@@ -10,7 +10,6 @@ import {
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { RouterLink } from '@angular/router';
-import { hlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +18,7 @@ import { hlmH1 } from '@spartan-ng/helm/typography';
     <div hlmSidebarWrapper>
       <hlm-sidebar>
         <div hlmSidebarHeader>
-          <h1 class="${hlmH1}">VIA</h1>
+          <img src="/assets/via_logo.png" alt="Logo" class="h-16 mr-auto pl-2 object-contain" />
         </div>
         <div hlmSidebarContent>
           <div hlmSidebarGroup>

@@ -1,11 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
-import { HlmDropdownMenuImports } from '@spartan-ng/helm/dropdown-menu';
-import { HlmIconImports } from '@spartan-ng/helm/icon';
-import { HlmInputImports } from '@spartan-ng/helm/input';
-import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { HlmTableImports } from '@spartan-ng/helm/table';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
 import {
@@ -22,17 +17,7 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'spartan-data-table-preview',
-  imports: [
-    FlexRenderDirective,
-    FormsModule,
-    HlmDropdownMenuImports,
-    HlmButtonImports,
-    HlmIconImports,
-    HlmInputImports,
-    BrnSelectImports,
-    HlmSelectImports,
-    HlmTableImports,
-  ],
+  imports: [FlexRenderDirective, FormsModule, HlmButtonImports, HlmTableImports],
   host: {
     class: 'w-full',
   },
