@@ -29,7 +29,7 @@ public class UserController : ControllerBase
                     u.last_name,
                     u.email,
                     u.phone,
-                    roleName = r.name
+                    role_name = r.name
                 }
             ).ToListAsync();
 
@@ -50,7 +50,7 @@ public class UserController : ControllerBase
                 u.last_name,
                 u.email,
                 u.phone,
-                roleName = r.name
+                role_name = r.name
             }
         ).FirstOrDefaultAsync();
 

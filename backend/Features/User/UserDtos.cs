@@ -43,5 +43,5 @@ public class UserDto
     public virtual team? team { get; set; }
 
     // extra field
-    public string? roleName { get; set; }
+    public string? role_name { get; set; }
 }
