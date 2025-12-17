@@ -1,9 +1,9 @@
-<h2 [class]="hlmH2">Users</h2>
-@if(usersQuery.error()) {
+<h2 [class]="hlmH2">Leads</h2>
+@if(leadsQuery.error()) {
 <div class="flex h-48 w-full items-center justify-center">
-  <div class="text-destructive text-sm">Error loading users: {{ usersQuery.error()?.message }}</div>
+  <div class="text-destructive text-sm">Error loading leads: {{ leadsQuery.error()?.message }}</div>
 </div>
-} @if (usersQuery.isLoading()) {
+} @if (leadsQuery.isLoading()) {
 <div class="flex h-48 w-full items-center justify-center">
   <div class="text-muted-foreground text-sm">Loading...</div>
 </div>

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
-import { lucideHouse, lucideUsers, lucideUserStar } from '@ng-icons/lucide';
+import {
+  lucideCalendar,
+  lucideChartPie,
+  lucideMapPinHouse,
+  lucideUsers,
+  lucideUserStar,
+} from '@ng-icons/lucide';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { RouterLink } from '@angular/router';
@@ -38,9 +44,11 @@ import { hlmH1 } from '@spartan-ng/helm/typography';
   `,
   providers: [
     provideIcons({
-      lucideHouse,
+      lucideChartPie,
       lucideUsers,
       lucideUserStar,
+      lucideCalendar,
+      lucideMapPinHouse,
     }),
   ],
 })
@@ -49,7 +57,7 @@ export class AppSidebar {
     {
       title: 'Dashboard',
       url: '',
-      icon: 'lucideHouse',
+      icon: 'lucideChartPie',
     },
     {
       title: 'Leads',
@@ -60,6 +68,16 @@ export class AppSidebar {
       title: 'Users',
       url: '/users',
       icon: 'lucideUsers',
+    },
+    {
+      title: 'Centers',
+      url: '/centers',
+      icon: 'lucideMapPinHouse',
+    },
+    {
+      title: 'Appointments',
+      url: '/appointments',
+      icon: 'lucideCalendar',
     },
   ];
 }
