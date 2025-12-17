@@ -8,55 +8,13 @@
   <div class="text-muted-foreground text-sm">Loading...</div>
 </div>
 } @else if(hasResults()) {
-<div class="mt-4 flex items-center justify-end">
+<div class="mb-4 mt-4 flex items-center">
   <button hlmBtn>Add new lead</button>
 </div>
-<div class="flex flex-col justify-between gap-4 py-4 sm:flex-row sm:items-center">
-  <div class="overflow-hidden rounded-md border">
-    <div hlmTableContainer>
-      <table hlmTable>
-        <thead hlmTHead>
-          @for (headerGroup of _table.getHeaderGroups(); track headerGroup.id) {
-          <tr hlmTr>
-            @for (header of headerGroup.headers; track header.id) {
-            <th hlmTh [attr.colSpan]="header.colSpan">
-              @if (!header.isPlaceholder) {
-              <ng-container
-                *flexRender="
-                  header.column.columnDef.header;
-                  props: header.getContext();
-                  let headerText
-                "
-              >
-                <div [innerHTML]="headerText"></div>
-              </ng-container>
-              }
-            </th>
-            }
-          </tr>
-          }
-        </thead>
-        <tbody hlmTBody>
-          @for (row of _table.getRowModel().rows; track row.id) {
-          <tr hlmTr [attr.key]="row.id">
-            @for (cell of row.getVisibleCells(); track $index) {
-            <td hlmTd>
-              <ng-container
-                *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-              >
-                <div [innerHTML]="cell"></div>
-              </ng-container>
-            </td>
-            }
-          </tr>
-          } @empty {
-          <tr hlmTr>
-            <td hlmTd class="h-24 text-center" [attr.colspan]="_columns.length">No results.</td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<custom-datatable
+  [data]="leadsQuery.data()"
+  [columns]="columns()"
+  [options]="{ enableResizing: true, minSize: 60, maxSize: 800, tableId: 'leads-table' }"
+>
+</custom-datatable>
 }

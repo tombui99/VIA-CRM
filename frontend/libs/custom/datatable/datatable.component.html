@@ -1,0 +1,122 @@
+<div class="relative overflow-hidden rounded-lg border">
+  @if (isLoading()) {
+  <div
+    class="absolute inset-0 z-10 flex animate-in items-center justify-center bg-background/60 backdrop-blur-sm duration-200 fade-in"
+  >
+    <div class="flex items-center gap-3 rounded-lg border bg-background px-6 py-4 shadow-lg">
+      Loading...
+    </div>
+  </div>
+  }
+
+  <div class="overflow-auto" #scrollContainer (scroll)="onScroll($event)">
+    <table class="w-full min-w-full table-fixed" [ngStyle]="columnSizeVars()">
+      <thead>
+        @for ( headerGroup of table.getHeaderGroups(); track headerGroup.id; let firstGroup = $first
+        ) {
+        <tr>
+          @for (header of headerGroup.headers; track header.id) {
+          <th
+            [attr.colSpan]="header.colSpan"
+            [ResizableHeader]="header.id"
+            [class]="getThClass(header)"
+            [style.left.px]="
+              isPinned(header.column.id) === 'left'
+                ? getPinnedOffset(header.column.id, 'left')
+                : null
+            "
+            [style.right.px]="
+              isPinned(header.column.id) === 'right'
+                ? getPinnedOffset(header.column.id, 'right')
+                : null
+            "
+          >
+            @if (!header.isPlaceholder && canSort(header.column.id)) {
+            <button
+              [style.outline-offset.px]="-2"
+              class="flex h-12 w-full min-w-0 cursor-pointer items-center justify-between gap-1 pr-3 pl-4 text-accent-foreground underline underline-offset-4 hover:text-accent-foreground/70"
+              (click)="onColumnSort(header.column.id)"
+            >
+              <ng-container
+                *flexRender="
+                  header.column.columnDef.header;
+                  props: header.getContext();
+                  let headerText
+                "
+              >
+                <span class="min-w-0 truncate" [innerHTML]="headerText"></span>
+              </ng-container>
+              @if (isColumnSorted(header.column.id)) {
+              <ng-icon
+                [name]="
+                  getSortDirection(header.column.id) === 'asc'
+                    ? 'faSolidArrowUp'
+                    : 'faSolidArrowDown'
+                "
+                size="16"
+                class="relative top-1"
+              />
+              }
+            </button>
+            } @else if (!header.isPlaceholder) {
+            <ng-container
+              *flexRender="
+                header.column.columnDef.header;
+                props: header.getContext();
+                let headerText
+              "
+            >
+              <div class="truncate" [innerHTML]="headerText"></div>
+            </ng-container>
+            } @if (header.column.getCanResize() && options().enableResizing !== false) {
+            <div
+              [class]="getResizeHandleClass(header)"
+              [attr.data-column-resize]="header.column.id"
+              (mousedown)="header.getResizeHandler()($event)"
+              (touchstart)="header.getResizeHandler()($event)"
+            ></div>
+            }
+          </th>
+          }
+          <th [class]="getEmptyThClass(firstGroup)"></th>
+        </tr>
+        }
+      </thead>
+
+      <tbody>
+        @for (row of table.getRowModel().rows; track row.id) {
+        <tr [class]="getTrClass(row)" [attr.data-state]="row.getIsSelected() && 'selected'">
+          @for (cell of row.getVisibleCells(); track cell.id) {
+          <td
+            [ResizableCell]="cell.column.id"
+            [class]="getTdClass(cell, row)"
+            [style.left.px]="
+              isPinned(cell.column.id) === 'left' ? getPinnedOffset(cell.column.id, 'left') : null
+            "
+            [style.right.px]="
+              isPinned(cell.column.id) === 'right' ? getPinnedOffset(cell.column.id, 'right') : null
+            "
+          >
+            <ng-container
+              *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cellContent"
+            >
+              <div class="truncate" [innerHTML]="cellContent"></div>
+            </ng-container>
+          </td>
+          }
+          <td class="w-full bg-background! hover:bg-background!"></td>
+        </tr>
+        } @empty {
+        <tr>
+          <td
+            class="h-24 px-4 py-3 text-center text-muted-foreground"
+            [attr.colspan]="table.getAllColumns().length"
+          >
+            <ng-content select="[slot=empty]">No results.</ng-content>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

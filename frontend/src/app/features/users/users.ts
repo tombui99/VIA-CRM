@@ -1,23 +1,21 @@
 import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
-import { HlmTableImports } from '@spartan-ng/helm/table';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
 import {
-  type ColumnDef,
   createAngularTable,
-  FlexRenderDirective,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/angular-table';
-import { User, UserService } from '../../api/generated';
+import { UserDto, UserService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectQuery } from '@tanstack/angular-query-experimental';
+import { Datatable, DatatableColumn } from '@libs/custom/datatable';
 
 @Component({
   selector: 'spartan-data-table-preview',
-  imports: [FlexRenderDirective, FormsModule, HlmButtonImports, HlmTableImports],
+  imports: [FormsModule, HlmButtonImports, Datatable],
   host: {
     class: 'w-full',
   },
@@ -37,7 +35,7 @@ export class Users {
 
   readonly hasResults = computed(() => (this.usersQuery.data()?.length ?? 0) > 0);
 
-  protected readonly _columns: ColumnDef<User>[] = [
+  protected readonly columns = computed((): DatatableColumn<UserDto>[] => [
     {
       accessorKey: 'first_name',
       id: 'first_name',
@@ -71,18 +69,18 @@ export class Users {
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
-      accessorKey: 'roleName',
-      id: 'roleName',
+      accessorKey: 'role_name',
+      id: 'role_name',
       header: 'Role Name',
       enableSorting: false,
       size: 250,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
-  ];
+  ]);
 
-  protected readonly _table = createAngularTable<User>(() => ({
+  protected readonly _table = createAngularTable<UserDto>(() => ({
     data: [this.usersQuery.data() ?? []].flat(),
-    columns: this._columns,
+    columns: this.columns(),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

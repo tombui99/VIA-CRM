@@ -37,6 +37,6 @@ export interface UserDto {
     region?: Region;
     role?: UserRole;
     team?: Team;
-    roleName?: string | null;
+    role_name?: string | null;
 }
 
