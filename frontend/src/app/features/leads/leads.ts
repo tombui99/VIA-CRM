@@ -1,6 +1,5 @@
 import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
 import {
   createAngularTable,
@@ -12,10 +11,11 @@ import { LeadDto, LeadService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { Datatable, DatatableColumn } from '@libs/custom/datatable';
+import { LeadSheetForm } from './lead-sheet-form/lead-sheet-form';
 
 @Component({
   selector: 'spartan-data-table-preview',
-  imports: [FormsModule, HlmButtonImports, Datatable],
+  imports: [FormsModule, Datatable, LeadSheetForm],
   host: {
     class: 'w-full',
   },
