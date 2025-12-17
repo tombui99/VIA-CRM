@@ -43,6 +43,3 @@ VERSION
 # System files
 .DS_Store
 Thumbs.db
-
-# Config files
-**app.config.dev.ts
