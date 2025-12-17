@@ -8,6 +8,14 @@ Add the config file:
 
 `app.config.dev.ts`
 
+Run generated models and services from backend:
+
+### Important - Make sure the dotnet app is running locally
+
+```basg
+npm run generate:api
+```
+
 To start a local development server, run:
 
 ```bash
