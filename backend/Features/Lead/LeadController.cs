@@ -7,11 +7,11 @@ namespace Crm.Api.Controllers;
 
 [ApiController]
 [Route("api/leads")]
-public class LeadsController : ControllerBase
+public class LeadController : ControllerBase
 {
     private readonly CrmDbContext _db;
 
-    public LeadsController(CrmDbContext db)
+    public LeadController(CrmDbContext db)
     {
         _db = db;
     }
