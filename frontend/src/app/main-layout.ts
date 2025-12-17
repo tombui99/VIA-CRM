@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AppSidebar } from '../../libs/custom/sidebar/sidebar';
+import { AppSidebar } from '@libs/custom/index';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
 
 @Component({

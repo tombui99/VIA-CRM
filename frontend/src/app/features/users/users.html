@@ -1,0 +1,59 @@
+@if(usersQuery.error()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-destructive text-sm">Error loading users: {{ usersQuery.error()?.message }}</div>
+</div>
+} @if (usersQuery.isLoading()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-muted-foreground text-sm">Loading...</div>
+</div>
+} @else if(hasResults()) {
+<h2 [class]="hlmH2">Users</h2>
+<div class="flex flex-col justify-between gap-4 py-4 sm:flex-row sm:items-center">
+  <div class="overflow-hidden rounded-md border">
+    <div hlmTableContainer>
+      <table hlmTable>
+        <thead hlmTHead>
+          @for (headerGroup of _table.getHeaderGroups(); track headerGroup.id) {
+          <tr hlmTr>
+            @for (header of headerGroup.headers; track header.id) {
+            <th hlmTh [attr.colSpan]="header.colSpan">
+              @if (!header.isPlaceholder) {
+              <ng-container
+                *flexRender="
+                  header.column.columnDef.header;
+                  props: header.getContext();
+                  let headerText
+                "
+              >
+                <div [innerHTML]="headerText"></div>
+              </ng-container>
+              }
+            </th>
+            }
+          </tr>
+          }
+        </thead>
+        <tbody hlmTBody>
+          @for (row of _table.getRowModel().rows; track row.id) {
+          <tr hlmTr [attr.key]="row.id">
+            @for (cell of row.getVisibleCells(); track $index) {
+            <td hlmTd>
+              <ng-container
+                *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+              >
+                <div [innerHTML]="cell"></div>
+              </ng-container>
+            </td>
+            }
+          </tr>
+          } @empty {
+          <tr hlmTr>
+            <td hlmTd class="h-24 text-center" [attr.colspan]="_columns.length">No results.</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+}

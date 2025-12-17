@@ -1,5 +1,5 @@
-export * from './leads.service';
-import { LeadsService } from './leads.service';
-export * from './users.service';
-import { UsersService } from './users.service';
-export const APIS = [LeadsService, UsersService];
+export * from './lead.service';
+import { LeadService } from './lead.service';
+export * from './user.service';
+import { UserService } from './user.service';
+export const APIS = [LeadService, UserService];

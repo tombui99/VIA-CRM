@@ -3,8 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from '../app.routes';
-import { API_CONFIG } from './api.config';
 import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+import { BASE_PATH } from '../api/generated';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,10 +12,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     {
-      provide: API_CONFIG,
-      useValue: {
-        apiUrl: '',
-      },
+      provide: BASE_PATH,
+      useValue: '',
     },
     provideTanStackQuery(new QueryClient()),
   ],

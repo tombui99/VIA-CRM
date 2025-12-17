@@ -8,4 +8,5 @@ export * from './region';
 export * from './source';
 export * from './team';
 export * from './user';
+export * from './userDto';
 export * from './userRole';
