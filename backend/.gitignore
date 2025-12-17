@@ -1,0 +1,19 @@
+# Build output
+**/bin/
+**/obj/
+
+# Local/User specific files
+# Launch settings for local IIS Express/Kestrel. Should not be committed.
+Properties/launchSettings.json
+# Visual Studio user options file
+*.user
+
+# Environment-specific configuration files (optional, depending on your team's policy)
+# Ignore development settings if they contain secrets or are purely local
+appsettings.Development.json
+
+# NuGet packages and caches
+# NuGet package directories are usually placed in 'packages' which you don't seem to have 
+# at the root, but the intermediate files in 'obj' are already covered.
+# If you ever have a 'packages' directory at the root, ignore it:
+# packages/
