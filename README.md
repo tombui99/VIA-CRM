@@ -16,21 +16,10 @@ This repository contains a full-stack web application built with a **.NET 10 bac
 ### Frontend
 
 - **[Angular 20](https://angular.dev)** framework
+- **[Angular Reactive Forms](https://angular.dev/guide/forms/reactive-forms)** forms
 - **[Tailwind CSS v4](https://tailwindcss.com)** styling
 - **[Spartan](https://ionicframework.com)** base components
 - **[Tanstack Query](https://tanstack.com/query/latest/docs/framework/angular/overview)** CRUD
-- **[Tanstack Forms](https://tanstack.com/form/latest/docs/overview)** forms
-
-## VSCode Extensions
-
-We recommend the following VSCode extensions for a better DX:
-
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-- [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
-- [Pretty TypeScript Errors](https://marketplace.visualstudio.com/items?itemName=YoavBls.pretty-ts-errors)
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
 ---
 
