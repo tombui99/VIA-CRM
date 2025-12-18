@@ -3,6 +3,7 @@ export * from './authUser';
 export * from './center';
 export * from './createUpdateLeadDto';
 export * from './lead';
+export * from './leadActivitiesDto';
 export * from './leadActivity';
 export * from './leadDto';
 export * from './leadNote';

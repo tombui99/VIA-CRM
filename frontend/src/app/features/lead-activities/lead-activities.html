@@ -1,0 +1,86 @@
+<h2 [class]="hlmH2">Lead Activities</h2>
+
+@if(leadActivitiesQuery.error()) {
+<div class="flex h-8 w-full items-center">
+  <div class="text-destructive text-sm">
+    Error loading leads: {{ leadActivitiesQuery.error()?.message }}
+  </div>
+</div>
+} @if (leadActivitiesQuery.isLoading()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-muted-foreground text-sm">Loading...</div>
+</div>
+} @else if(hasResults()) {
+<hlm-accordion type="single" collapsible class="w-full space-y-3 mt-4">
+  @for (lead of leadActivitiesQuery.data(); track lead.id) {
+  <hlm-accordion-item class="overflow-hidden rounded-xl border bg-background">
+    <!-- HEADER -->
+    <div class="flex">
+      <h3 class="contents">
+        <button
+          hlmAccordionTrigger
+          class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-muted/40"
+        >
+          <div class="min-w-0">
+            <div class="truncate text-base font-semibold">
+              {{ lead.first_name }} {{ lead.last_name }}
+            </div>
+
+            <div class="truncate text-sm text-muted-foreground">
+              {{ lead.email }} • {{ lead.phone }}
+            </div>
+          </div>
+        </button>
+      </h3>
+      <button hlmBtn class="m-4" [hlmDropdownMenuTrigger]="menu">Add New Activity</button>
+      <ng-template #menu>
+        <hlm-dropdown-menu class="w-56">
+          <hlm-dropdown-menu-group>
+            <hlm-dropdown-menu-label>Activity Type</hlm-dropdown-menu-label>
+
+            <hlm-dropdown-menu-separator />
+
+            <button hlmDropdownMenuCheckbox>
+              <span>Email</span>
+            </button>
+
+            <button hlmDropdownMenuCheckbox>
+              <span>Call</span>
+            </button>
+
+            <button hlmDropdownMenuCheckbox>
+              <span>SMS</span>
+            </button>
+          </hlm-dropdown-menu-group>
+        </hlm-dropdown-menu>
+      </ng-template>
+    </div>
+
+    <!-- CONTENT -->
+    <hlm-accordion-content class="border-t bg-muted/20">
+      <div class="px-5 py-4">
+        <ul class="space-y-3">
+          @for (activity of lead.activities; track activity.id) {
+          <li class="rounded-lg border bg-background p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium">
+                {{ activity.activity_type }}
+              </span>
+              <span class="text-xs text-muted-foreground">
+                {{ activity.created_at | date : 'short' }}
+              </span>
+            </div>
+            <p class="mt-1 text-sm text-muted-foreground">
+              {{ activity.outcome }}
+            </p>
+          </li>
+          } @empty {
+          <p class="text-sm text-muted-foreground">No activities found.</p>
+          }
+        </ul>
+      </div>
+    </hlm-accordion-content>
+  </hlm-accordion-item>
+  }
+</hlm-accordion>
+}

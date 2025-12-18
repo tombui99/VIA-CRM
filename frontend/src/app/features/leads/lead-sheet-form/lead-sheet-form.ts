@@ -30,10 +30,17 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
     <hlm-sheet #sheetRef side="right">
       <hlm-sheet-content *brnSheetContent="let ctx">
         <hlm-sheet-header>
+          @if (lead()) {
+          <h3 hlmSheetTitle>Edit lead</h3>
+          <p hlmSheetDescription>
+            Make changes to lead information here. Click save when you're done.
+          </p>
+          } @else {
           <h3 hlmSheetTitle>Add new lead</h3>
           <p hlmSheetDescription>
             Make changes to add a new lead here. Click save when you're done.
           </p>
+          }
         </hlm-sheet-header>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="grid flex-1 auto-rows-min gap-6 px-4">

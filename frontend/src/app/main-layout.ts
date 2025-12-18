@@ -7,7 +7,7 @@ import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
   selector: 'app-root',
   imports: [RouterOutlet, AppSidebar, HlmSidebarImports],
   template: `
-    <div class="flex min-h-screen">
+    <div class="min-h-screen">
       <app-sidebar>
         <main hlmSidebarInset class="flex-1 overflow-y-auto">
           <header class="container mx-auto px-4">
