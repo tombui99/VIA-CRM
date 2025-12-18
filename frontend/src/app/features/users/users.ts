@@ -2,12 +2,6 @@ import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
-import {
-  createAngularTable,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-} from '@tanstack/angular-table';
 import { UserDto, UserService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectQuery } from '@tanstack/angular-query-experimental';
@@ -77,12 +71,4 @@ export class Users {
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
   ]);
-
-  protected readonly _table = createAngularTable<UserDto>(() => ({
-    data: [this.usersQuery.data() ?? []].flat(),
-    columns: this.columns(),
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-  }));
 }

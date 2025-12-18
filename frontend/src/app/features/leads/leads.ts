@@ -1,12 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
-import {
-  createAngularTable,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-} from '@tanstack/angular-table';
 import { CreateUpdateLeadDto, LeadDto, LeadService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
@@ -119,12 +113,4 @@ export class Leads {
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
   ]);
-
-  protected readonly _table = createAngularTable<LeadDto>(() => ({
-    data: [this.leadsQuery.data() ?? []].flat(),
-    columns: this.columns(),
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-  }));
 }
