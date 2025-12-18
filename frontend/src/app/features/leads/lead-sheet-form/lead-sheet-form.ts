@@ -1,4 +1,4 @@
-import { Component, inject, output, viewChild } from '@angular/core';
+import { Component, effect, inject, model, output, viewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideIcons } from '@ng-icons/core';
 import { lucideCross } from '@ng-icons/lucide';
@@ -28,7 +28,6 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
   providers: [provideIcons({ lucideCross })],
   template: `
     <hlm-sheet #sheetRef side="right">
-      <button id="edit-profile" hlmSheetTrigger hlmBtn>Add new lead</button>
       <hlm-sheet-content *brnSheetContent="let ctx">
         <hlm-sheet-header>
           <h3 hlmSheetTitle>Add new lead</h3>
@@ -94,8 +93,8 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                   <hlm-select-value />
                 </hlm-select-trigger>
                 <hlm-select-content>
-                  <hlm-option [value]="1">Hanoi Center 1</hlm-option>
-                  <hlm-option [value]="2">HCM Center 1</hlm-option>
+                  <hlm-option [value]="1">HCM Center 1</hlm-option>
+                  <hlm-option [value]="2">Hanoi Center 1</hlm-option>
                 </hlm-select-content>
               </brn-select>
             </div>
@@ -126,11 +125,12 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
   `,
 })
 export class LeadSheetForm {
+  readonly fb = inject(FormBuilder);
+
   public readonly viewchildSheetRef = viewChild(BrnSheet);
 
   readonly submit = output<CreateUpdateLeadDto>();
-
-  readonly fb = inject(FormBuilder);
+  readonly lead = model<CreateUpdateLeadDto | null>();
 
   readonly form: FormGroup = this.fb.group({
     first_name: ['', Validators.required],
@@ -141,6 +141,16 @@ export class LeadSheetForm {
     center_id: [0, Validators.required],
     region_id: [0, Validators.required],
   });
+
+  constructor() {
+    effect(() => {
+      if (this.lead() == null) {
+        this.form.reset();
+        return;
+      }
+      this.form.patchValue(this.lead() as CreateUpdateLeadDto);
+    });
+  }
 
   submitForm() {
     this.submit.emit(this.form.value);

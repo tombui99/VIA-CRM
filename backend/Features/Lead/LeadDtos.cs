@@ -65,9 +65,9 @@ public class CreateUpdateLeadDto
     public string phone { get; set; } = null!;
     public string email { get; set; } = null!;
 
-    public long source_id { get; set; }
-    public long region_id { get; set; }
-    public long center_id { get; set; }
+    public long? source_id { get; set; }
+    public long? region_id { get; set; }
+    public long? center_id { get; set; }
 
     public long? assigned_user_id { get; set; }
     public long? assigned_team_id { get; set; }

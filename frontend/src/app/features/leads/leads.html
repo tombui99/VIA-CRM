@@ -19,7 +19,12 @@
 </div>
 } @else if(hasResults()) {
 <div class="mb-4 mt-4 flex items-center">
-  <lead-sheet (submit)="createLead($event)"></lead-sheet>
+  <button hlmBtn (click)="openLeadFormSheet()">Add new lead</button>
+  <lead-sheet
+    #leadSheetForm
+    [lead]="selectedLead()"
+    (submit)="handleLeadSubmit($event)"
+  ></lead-sheet>
 </div>
 <custom-datatable
   [data]="leadsQuery.data()"
@@ -27,4 +32,13 @@
   [options]="{ enableResizing: true, minSize: 60, maxSize: 800, tableId: 'leads-table' }"
 >
 </custom-datatable>
+<ng-template #firstNameCell let-context>
+  <span
+    class="underline capitalize cursor-pointer"
+    role="button"
+    tabindex="0"
+    (click)="openLeadFormSheet(context.row.original)"
+    >{{ context.getValue() }}</span
+  >
+</ng-template>
 }

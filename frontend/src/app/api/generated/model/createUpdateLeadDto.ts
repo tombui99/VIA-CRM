@@ -14,9 +14,9 @@ export interface CreateUpdateLeadDto {
     last_name?: string | null;
     phone?: string | null;
     email?: string | null;
-    source_id?: number;
-    region_id?: number;
-    center_id?: number;
+    source_id?: number | null;
+    region_id?: number | null;
+    center_id?: number | null;
     assigned_user_id?: number | null;
     assigned_team_id?: number | null;
 }

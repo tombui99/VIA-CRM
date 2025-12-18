@@ -34,6 +34,13 @@ public class LeadController : ControllerBase
                 last_name = l.last_name,
                 phone = l.phone,
                 email = l.email,
+                source_id = l.source_id,
+                region_id = l.region_id,
+                center_id = l.center_id,
+                assigned_user_id = l.assigned_user_id,
+                assigned_team_id = l.assigned_team_id,
+                is_duplicate = l.is_duplicate,
+                duplicate_of = l.duplicate_of,
                 center_name = center != null ? center.name : null,
                 source_name = source != null ? source.name : null,
                 assigned_user_name = user != null

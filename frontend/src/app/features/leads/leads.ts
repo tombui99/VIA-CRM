@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, signal, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
 import { CreateUpdateLeadDto, LeadDto, LeadService } from '../../api/generated';
@@ -6,10 +6,12 @@ import { winject } from '@libs/utils/winject';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { Datatable, DatatableColumn } from '@libs/custom/datatable';
 import { LeadSheetForm } from './lead-sheet-form/lead-sheet-form';
+import { CellContext } from '@tanstack/angular-table';
+import { HlmButton } from '@spartan-ng/helm/button';
 
 @Component({
   selector: 'spartan-data-table-preview',
-  imports: [FormsModule, Datatable, LeadSheetForm],
+  imports: [FormsModule, Datatable, LeadSheetForm, HlmButton],
   host: {
     class: 'w-full',
   },
@@ -39,13 +41,7 @@ export class Leads {
   }));
 
   createLead(payload: CreateUpdateLeadDto) {
-    const postPayload = {
-      ...payload,
-      // TODO: This should be the current authenticated user/team
-      assigned_user_id: payload.assigned_user_id ? payload.assigned_user_id : 1,
-      assigned_team_id: payload.assigned_team_id ? payload.assigned_team_id : 1,
-    } satisfies CreateUpdateLeadDto;
-    this.createLeadMutation.mutate(postPayload);
+    this.createLeadMutation.mutate(payload);
   }
 
   // Update Lead mutation
@@ -62,13 +58,36 @@ export class Leads {
     this.updateLeadMutation.mutate({ id, payload });
   }
 
+  handleLeadSubmit(lead: CreateUpdateLeadDto) {
+    if (this.selectedLead()?.id) {
+      this.updateLead(this.selectedLead()?.id!, lead);
+    } else {
+      this.createLead(lead);
+    }
+  }
+
+  // Datatable columns logic
+  firstNameCell =
+    viewChild.required<TemplateRef<{ $implicit: CellContext<LeadDto, unknown> }>>('firstNameCell');
+
+  leadSheetForm = viewChild<LeadSheetForm>('leadSheetForm');
+
+  selectedLead = signal<LeadDto | null>(null);
+
+  openLeadFormSheet(lead?: LeadDto) {
+    this.selectedLead.set(lead ?? null);
+    this.leadSheetForm()?.viewchildSheetRef()?.open();
+  }
+
   protected readonly columns = computed((): DatatableColumn<LeadDto>[] => [
     {
       accessorKey: 'first_name',
       id: 'first_name',
       header: 'First Name',
       enableSorting: false,
-      cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
+      cell: () => {
+        return this.firstNameCell();
+      },
     },
     {
       accessorKey: 'last_name',
