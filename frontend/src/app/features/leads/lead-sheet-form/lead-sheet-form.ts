@@ -114,6 +114,23 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                 </hlm-select-content>
               </brn-select>
             </div>
+            <div class="grid gap-3">
+              <label hlmLabel for="assigned_user_id" class="text-right">Assigned User</label>
+              <brn-select
+                class="inline-block"
+                placeholder="Select an option"
+                formControlName="assigned_user_id"
+              >
+                <hlm-select-trigger class="w-56">
+                  <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                  <hlm-option [value]="1">Tom Bui</hlm-option>
+                  <hlm-option [value]="2">Linh Nguyen</hlm-option>
+                  <hlm-option [value]="3">Minh Tran</hlm-option>
+                </hlm-select-content>
+              </brn-select>
+            </div>
           </div>
           <hlm-sheet-footer>
             <button hlmBtn type="submit">Save Changes</button>
@@ -140,6 +157,7 @@ export class LeadSheetForm {
     source_id: [0, Validators.required],
     center_id: [0, Validators.required],
     region_id: [0, Validators.required],
+    assigned_user_id: [0, Validators.required],
   });
 
   constructor() {

@@ -5,6 +5,7 @@ import {
   lucideCalendar,
   lucideChartPie,
   lucideMapPinHouse,
+  lucideNotebookPen,
   lucideUsers,
   lucideUserStar,
 } from '@ng-icons/lucide';
@@ -50,6 +51,7 @@ import { RouterLink } from '@angular/router';
       lucideCalendar,
       lucideMapPinHouse,
       lucideAudioWaveform,
+      lucideNotebookPen,
     }),
   ],
 })
@@ -69,6 +71,11 @@ export class AppSidebar {
       title: 'Activities',
       url: '/activities',
       icon: 'lucideAudioWaveform',
+    },
+    {
+      title: 'Notes',
+      url: '/notes',
+      icon: 'lucideNotebookPen',
     },
     {
       title: 'Users',
