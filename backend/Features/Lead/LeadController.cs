@@ -27,8 +27,6 @@ public class LeadController : ControllerBase
             from source in sourceGroup.DefaultIfEmpty()
             join u in _db.users on l.assigned_user_id equals u.id into userGroup
             from user in userGroup.DefaultIfEmpty()
-            join la in _db.lead_activities on l.id equals la.lead_id into leadActivityGroup
-            from leadActivity in leadActivityGroup.DefaultIfEmpty()
             select new LeadDto
             {
                 id = l.id,
@@ -41,10 +39,77 @@ public class LeadController : ControllerBase
                 assigned_user_name = user != null
                     ? user.first_name + " " + user.last_name
                     : null,
-                lead_activities_type = leadActivity != null ? leadActivity.activity_type : null,
-                lead_activities_outcome = leadActivity != null ? leadActivity.outcome : null,
             }).ToListAsync();
 
         return Ok(leads);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<long>> Create(CreateUpdateLeadDto dto)
+    {
+        // Optional: simple duplicate check
+        var duplicate = await _db.leads
+            .Where(l => l.phone == dto.phone || l.email == dto.email)
+            .Select(l => l.id)
+            .FirstOrDefaultAsync();
+
+        var lead = new lead
+        {
+            first_name = dto.first_name,
+            last_name = dto.last_name,
+            phone = dto.phone,
+            email = dto.email,
+
+            source_id = dto.source_id,
+            region_id = dto.region_id,
+            center_id = dto.center_id,
+
+            assigned_user_id = dto.assigned_user_id,
+            assigned_team_id = dto.assigned_team_id,
+
+            is_duplicate = duplicate != 0,
+            duplicate_of = duplicate != 0 ? duplicate : null
+        };
+
+        _db.leads.Add(lead);
+        await _db.SaveChangesAsync();
+
+        return Ok(lead.id);
+    }
+
+    [HttpPatch("{id:long}")]
+    public async Task<IActionResult> Update(long id, CreateUpdateLeadDto dto)
+    {
+        var lead = await _db.leads.FindAsync(id);
+
+        if (lead == null)
+            return NotFound();
+
+        // Optional: duplicate re-check (exclude current lead)
+        var duplicateId = await _db.leads
+            .Where(l =>
+                l.id != id &&
+                (l.phone == dto.phone || l.email == dto.email))
+            .Select(l => l.id)
+            .FirstOrDefaultAsync();
+
+        lead.first_name = dto.first_name;
+        lead.last_name = dto.last_name;
+        lead.phone = dto.phone;
+        lead.email = dto.email;
+
+        lead.source_id = dto.source_id;
+        lead.region_id = dto.region_id;
+        lead.center_id = dto.center_id;
+
+        lead.assigned_user_id = dto.assigned_user_id;
+        lead.assigned_team_id = dto.assigned_team_id;
+        lead.is_duplicate = duplicateId != 0;
+        lead.duplicate_of = duplicateId != 0 ? duplicateId : null;
+
+        await _db.SaveChangesAsync();
+
+        return NoContent();
+    }
+
 }

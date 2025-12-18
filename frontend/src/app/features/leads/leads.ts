@@ -7,9 +7,9 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/angular-table';
-import { LeadDto, LeadService } from '../../api/generated';
+import { CreateUpdateLeadDto, LeadDto, LeadService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { Datatable, DatatableColumn } from '@libs/custom/datatable';
 import { LeadSheetForm } from './lead-sheet-form/lead-sheet-form';
 
@@ -35,11 +35,51 @@ export class Leads {
 
   readonly hasResults = computed(() => (this.leadsQuery.data()?.length ?? 0) > 0);
 
+  // Create Lead mutation
+  readonly createLeadMutation = injectMutation(() => ({
+    mutationFn: (payload: CreateUpdateLeadDto) => this.leadsService.apiLeadsPost(payload),
+
+    onSuccess: () => {
+      this.leadsQuery.refetch();
+    },
+  }));
+
+  createLead(payload: CreateUpdateLeadDto) {
+    const postPayload = {
+      ...payload,
+      // TODO: This should be the current authenticated user/team
+      assigned_user_id: payload.assigned_user_id ? payload.assigned_user_id : 1,
+      assigned_team_id: payload.assigned_team_id ? payload.assigned_team_id : 1,
+    } satisfies CreateUpdateLeadDto;
+    this.createLeadMutation.mutate(postPayload);
+  }
+
+  // Update Lead mutation
+  readonly updateLeadMutation = injectMutation(() => ({
+    mutationFn: ({ id, payload }: { id: number; payload: CreateUpdateLeadDto }) =>
+      this.leadsService.apiLeadsIdPatch(id, payload),
+
+    onSuccess: () => {
+      this.leadsQuery.refetch();
+    },
+  }));
+
+  updateLead(id: number, payload: CreateUpdateLeadDto) {
+    this.updateLeadMutation.mutate({ id, payload });
+  }
+
   protected readonly columns = computed((): DatatableColumn<LeadDto>[] => [
     {
       accessorKey: 'first_name',
       id: 'first_name',
       header: 'First Name',
+      enableSorting: false,
+      cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
+    },
+    {
+      accessorKey: 'last_name',
+      id: 'last_name',
+      header: 'Last Name',
       enableSorting: false,
       cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
     },
@@ -76,21 +116,6 @@ export class Leads {
       id: 'assigned_user_name',
       header: 'Assigned User',
       enableSorting: false,
-      cell: (info) => `<span>${info.getValue<string>()}</span>`,
-    },
-    {
-      accessorKey: 'lead_activities_type',
-      id: 'lead_activities_type',
-      header: 'Acitivity Type',
-      enableSorting: false,
-      cell: (info) => `<span>${info.getValue<string>()}</span>`,
-    },
-    {
-      accessorKey: 'lead_activities_outcome',
-      id: 'lead_activities_outcome',
-      header: 'Acitivity Outcome',
-      enableSorting: false,
-      size: 250,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
   ]);

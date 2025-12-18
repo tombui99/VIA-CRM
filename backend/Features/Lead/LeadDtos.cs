@@ -56,6 +56,19 @@ public class LeadDto
     public string? center_name { get; set; }
     public string? source_name { get; set; }
     public string? assigned_user_name { get; set; }
-    public string? lead_activities_type { get; set; }
-    public string? lead_activities_outcome { get; set; }
+}
+
+public class CreateUpdateLeadDto
+{
+    public string first_name { get; set; } = null!;
+    public string last_name { get; set; } = null!;
+    public string phone { get; set; } = null!;
+    public string email { get; set; } = null!;
+
+    public long source_id { get; set; }
+    public long region_id { get; set; }
+    public long center_id { get; set; }
+
+    public long? assigned_user_id { get; set; }
+    public long? assigned_team_id { get; set; }
 }

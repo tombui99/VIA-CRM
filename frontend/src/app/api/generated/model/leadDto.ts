@@ -46,7 +46,5 @@ export interface LeadDto {
     center_name?: string | null;
     source_name?: string | null;
     assigned_user_name?: string | null;
-    lead_activities_type?: string | null;
-    lead_activities_outcome?: string | null;
 }
 

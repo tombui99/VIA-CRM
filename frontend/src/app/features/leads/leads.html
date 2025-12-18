@@ -1,15 +1,25 @@
 <h2 [class]="hlmH2">Leads</h2>
 @if(leadsQuery.error()) {
-<div class="flex h-48 w-full items-center justify-center">
+<div class="flex h-8 w-full items-center">
   <div class="text-destructive text-sm">Error loading leads: {{ leadsQuery.error()?.message }}</div>
 </div>
-} @if (leadsQuery.isLoading()) {
+}
+
+<!-- Mutation errors -->
+@if(createLeadMutation.error() || updateLeadMutation.error()) {
+<div class="flex h-8 w-full items-center">
+  <div class="text-destructive text-sm">Error creating/updating leads</div>
+</div>
+}
+
+<!-- Content -->
+@if (leadsQuery.isLoading()) {
 <div class="flex h-48 w-full items-center justify-center">
   <div class="text-muted-foreground text-sm">Loading...</div>
 </div>
 } @else if(hasResults()) {
 <div class="mb-4 mt-4 flex items-center">
-  <lead-sheet></lead-sheet>
+  <lead-sheet (submit)="createLead($event)"></lead-sheet>
 </div>
 <custom-datatable
   [data]="leadsQuery.data()"

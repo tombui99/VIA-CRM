@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate:api": "openapi-generator-cli generate -i http://localhost:5084/swagger/v1/swagger.json -g typescript-angular -o src/app/api/generated --additional-properties=providedInRoot=true"
+    "generate:api": "rm -rf src/app/api/generated && openapi-generator-cli generate -i http://localhost:5084/swagger/v1/swagger.json -g typescript-angular -o src/app/api/generated --additional-properties=providedInRoot=true"
   },
   "prettier": {
     "printWidth": 100,
