@@ -39,18 +39,11 @@
             <hlm-dropdown-menu-label>Activity Type</hlm-dropdown-menu-label>
 
             <hlm-dropdown-menu-separator />
-
-            <button hlmDropdownMenuCheckbox>
-              <span>Email</span>
+            @for (type of activityTypes(); track type) {
+            <button hlmDropdownMenuCheckbox (click)="openActivitySheet(lead, type)">
+              <span>{{ type }}</span>
             </button>
-
-            <button hlmDropdownMenuCheckbox>
-              <span>Call</span>
-            </button>
-
-            <button hlmDropdownMenuCheckbox>
-              <span>SMS</span>
-            </button>
+            }
           </hlm-dropdown-menu-group>
         </hlm-dropdown-menu>
       </ng-template>
@@ -83,4 +76,6 @@
   </hlm-accordion-item>
   }
 </hlm-accordion>
+
+<activity-sheet #activitySheet />
 }

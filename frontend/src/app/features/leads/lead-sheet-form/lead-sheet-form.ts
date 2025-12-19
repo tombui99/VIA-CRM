@@ -9,7 +9,6 @@ import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { HlmSheetImports } from '@spartan-ng/helm/sheet';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
-import { HlmTextareaImports } from '@spartan-ng/helm/textarea';
 import { CreateUpdateLeadDto } from '../../../api/generated';
 
 @Component({
@@ -23,7 +22,6 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
     ReactiveFormsModule,
     BrnSelectImports,
     HlmSelectImports,
-    HlmTextareaImports,
   ],
   providers: [provideIcons({ lucideCross })],
   template: `
@@ -83,6 +81,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                   <hlm-select-value />
                 </hlm-select-trigger>
                 <hlm-select-content>
+                  <!-- TODO: This should come from backend -->
                   <hlm-option [value]="1">Website Form</hlm-option>
                   <hlm-option [value]="2">Facebook Ads</hlm-option>
                   <hlm-option [value]="3">Hotline Call</hlm-option>
@@ -100,6 +99,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                   <hlm-select-value />
                 </hlm-select-trigger>
                 <hlm-select-content>
+                  <!-- TODO: This should come from backend -->
                   <hlm-option [value]="1">HCM Center 1</hlm-option>
                   <hlm-option [value]="2">Hanoi Center 1</hlm-option>
                 </hlm-select-content>
@@ -116,6 +116,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                   <hlm-select-value />
                 </hlm-select-trigger>
                 <hlm-select-content>
+                  <!-- TODO: This should come from backend -->
                   <hlm-option [value]="1">Hanoi</hlm-option>
                   <hlm-option [value]="2">Ho Chi Minh</hlm-option>
                 </hlm-select-content>
@@ -132,6 +133,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                   <hlm-select-value />
                 </hlm-select-trigger>
                 <hlm-select-content>
+                  <!-- TODO: This should come from backend -->
                   <hlm-option [value]="1">Tom Bui</hlm-option>
                   <hlm-option [value]="2">Linh Nguyen</hlm-option>
                   <hlm-option [value]="3">Minh Tran</hlm-option>

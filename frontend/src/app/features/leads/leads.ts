@@ -131,5 +131,12 @@ export class Leads {
       enableSorting: false,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
+    {
+      accessorKey: 'is_duplicate',
+      id: 'is_duplicate',
+      header: 'Is Duplicate',
+      enableSorting: false,
+      cell: (info) => `<span>${info.getValue<string>() ? 'yes' : 'no'}</span>`,
+    },
   ]);
 }
