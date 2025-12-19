@@ -56,5 +56,43 @@ public class LeadActivitiesController : ControllerBase
         return Ok(leads);
     }
 
+    [HttpPost]
+    public async Task<ActionResult<long>> Create(CreateLeadActivityDto dto)
+    {
+        // Ensure lead exists
+        var leadExists = await _db.leads.AnyAsync(l => l.id == dto.lead_id);
+        if (!leadExists)
+            return BadRequest("Lead does not exist");
+
+        var activity = new lead_activity
+        {
+            lead_id = dto.lead_id,
+            user_id = dto.user_id,
+            activity_type = dto.activity_type,
+            outcome = dto.outcome,
+            created_at = DateTime.UtcNow,
+        };
+
+        _db.lead_activities.Add(activity);
+        await _db.SaveChangesAsync();
+
+        return Ok(activity.id);
+    }
+
+    [HttpPatch("{id:long}")]
+    public async Task<IActionResult> Update(long id, UpdateLeadActivityDto dto)
+    {
+        var activity = await _db.lead_activities.FindAsync(id);
+
+        if (activity == null)
+            return NotFound();
+
+        activity.activity_type = dto.activity_type;
+        activity.outcome = dto.outcome;
+
+        await _db.SaveChangesAsync();
+
+        return NoContent();
+    }
 
 }

@@ -1,6 +1,7 @@
 export * from './appointment';
 export * from './authUser';
 export * from './center';
+export * from './createLeadActivityDto';
 export * from './createUpdateLeadDto';
 export * from './lead';
 export * from './leadActivitiesDto';
@@ -10,6 +11,7 @@ export * from './leadNote';
 export * from './region';
 export * from './source';
 export * from './team';
+export * from './updateLeadActivityDto';
 export * from './user';
 export * from './userDto';
 export * from './userRole';

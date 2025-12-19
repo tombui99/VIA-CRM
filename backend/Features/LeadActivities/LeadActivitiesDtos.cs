@@ -23,3 +23,17 @@ public class LeadActivitiesDto
 
     public List<lead_activity> activities { get; set; } = [];
 }
+
+public class CreateLeadActivityDto
+{
+    public long lead_id { get; set; }
+    public long user_id { get; set; }
+    public string activity_type { get; set; } = null!;
+    public string outcome { get; set; } = null!;
+}
+
+public class UpdateLeadActivityDto
+{
+    public string activity_type { get; set; } = null!;
+    public string outcome { get; set; } = null!;
+}

@@ -23,20 +23,14 @@ import { HlmTextareaImports } from '@spartan-ng/helm/textarea';
     <hlm-sheet #sheetRef side="right">
       <hlm-sheet-content *brnSheetContent="let ctx">
         <hlm-sheet-header>
-          @if (lead()) {
-          <h3 hlmSheetTitle>Edit activity</h3>
-          <p hlmSheetDescription>
-            Make changes to activity information here. Click save when you're done.
-          </p>
-          } @else {
           <h3 hlmSheetTitle>Add new activity</h3>
           <p hlmSheetDescription>
             Make changes to add a new activity here. Click save when you're done.
           </p>
-          }
         </hlm-sheet-header>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="grid flex-1 auto-rows-min gap-6 px-4">
+            <h4 class="font-bold">Activity type: {{ activityType() }}</h4>
             <div class="grid gap-3">
               <label hlmLabel for="outcome" class="text-right">Outcome</label>
               <textarea hlmTextarea class="w-80" id="outcome" formControlName="outcome"></textarea>
@@ -53,28 +47,18 @@ import { HlmTextareaImports } from '@spartan-ng/helm/textarea';
 })
 export class ActivitySheetForm {
   readonly fb = inject(FormBuilder);
+  readonly activityType = model<string | null>();
 
   public readonly viewchildSheetRef = viewChild(BrnSheet);
 
-  readonly submit = output<any>();
-  readonly lead = model<any | null>();
+  readonly submit = output<string>();
 
   readonly form: FormGroup = this.fb.group({
     outcome: ['', Validators.required],
   });
 
-  constructor() {
-    effect(() => {
-      if (this.lead() == null) {
-        this.form.reset();
-        return;
-      }
-      this.form.patchValue(this.lead());
-    });
-  }
-
   submitForm() {
-    this.submit.emit(this.form.value);
+    this.submit.emit(this.form.value.outcome);
     this.viewchildSheetRef()?.close({});
   }
 }

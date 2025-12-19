@@ -6,7 +6,17 @@
     Error loading leads: {{ leadActivitiesQuery.error()?.message }}
   </div>
 </div>
-} @if (leadActivitiesQuery.isLoading()) {
+}
+
+<!-- Mutation errors -->
+@if(createActivityMutation.error()) {
+<div class="flex h-8 w-full items-center">
+  <div class="text-destructive text-sm">Error creating activity</div>
+</div>
+}
+
+<!-- Content -->
+@if (leadActivitiesQuery.isLoading()) {
 <div class="flex h-48 w-full items-center justify-center">
   <div class="text-muted-foreground text-sm">Loading...</div>
 </div>
@@ -40,7 +50,7 @@
 
             <hlm-dropdown-menu-separator />
             @for (type of activityTypes(); track type) {
-            <button hlmDropdownMenuCheckbox (click)="openActivitySheet(lead, type)">
+            <button hlmDropdownMenuCheckbox (click)="openActivitySheet(type, lead.id)">
               <span>{{ type }}</span>
             </button>
             }
@@ -77,5 +87,9 @@
   }
 </hlm-accordion>
 
-<activity-sheet #activitySheet />
+<activity-sheet
+  #activitySheet
+  [activityType]="selectedActivityType()"
+  (submit)="handleSubmit($event)"
+/>
 }
