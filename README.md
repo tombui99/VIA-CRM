@@ -15,7 +15,7 @@ This repository contains a full-stack web application built with a **.NET 10 bac
 
 ### Frontend
 
-- **[Angular 20](https://angular.dev)** framework
+- **[Angular 21](https://angular.dev)** framework
 - **[Angular Reactive Forms](https://angular.dev/guide/forms/reactive-forms)** forms
 - **[Tailwind CSS v4](https://tailwindcss.com)** styling
 - **[Spartan](https://ionicframework.com)** base components
