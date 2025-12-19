@@ -1,0 +1,47 @@
+<h2 [class]="hlmH2">Dashboard</h2>
+
+@if(dashboardQuery.error()) {
+<div class="flex h-8 w-full items-center">
+  <div class="text-destructive text-sm">
+    Error loading leads: {{ dashboardQuery.error()?.message }}
+  </div>
+</div>
+}
+
+<!-- Content -->
+
+@if (dashboardQuery.isLoading()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-muted-foreground text-sm">Loading...</div>
+</div>
+}
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Leads by Source</h3>
+    <div class="chart-box">
+      <canvas #leadsBySource></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Leads Over Time</h3>
+    <div class="chart-box">
+      <canvas #leadsOverTime></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Activities by Type</h3>
+    <div class="chart-box">
+      <canvas #activitiesByType></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Activities by Outcome</h3>
+    <div class="chart-box">
+      <canvas #activitiesByOutcome></canvas>
+    </div>
+  </div>
+</div>

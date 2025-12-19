@@ -31,6 +31,8 @@ export interface Lead {
     created_by?: number | null;
     is_duplicate?: boolean | null;
     duplicate_of?: number | null;
+    created_at?: string;
+    updated_at?: string | null;
     inverseduplicate_ofNavigation?: Array<Lead> | null;
     appointments?: Array<Appointment> | null;
     assigned_team?: Team;

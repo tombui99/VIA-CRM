@@ -6,6 +6,45 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      // Theme initialization script - runs before Angular loads
+      (function () {
+        function getSystemThemePreference() {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+          const htmlElement = document.documentElement;
+          htmlElement.classList.remove('dark');
+
+          let shouldApplyDark = false;
+
+          if (theme === 'dark') {
+            shouldApplyDark = true;
+          } else if (theme === 'system') {
+            shouldApplyDark = getSystemThemePreference() === 'dark';
+          }
+
+          if (shouldApplyDark) {
+            htmlElement.classList.add('dark');
+          }
+        }
+
+        // Get saved theme or default to system
+        const savedTheme = localStorage.getItem('theme') || 'system';
+        applyTheme(savedTheme);
+
+        // Listen for system theme changes if using system theme
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', function () {
+          const currentTheme = localStorage.getItem('theme') || 'system';
+          if (currentTheme === 'system') {
+            applyTheme('system');
+          }
+        });
+      })();
+    </script>
   </head>
   <body>
     <app-root></app-root>

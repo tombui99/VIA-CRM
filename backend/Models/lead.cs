@@ -31,6 +31,10 @@ public partial class lead
 
     public long? duplicate_of { get; set; }
 
+    public DateTime created_at { get; set; }
+
+    public DateTime? updated_at { get; set; }
+
     public virtual ICollection<lead> Inverseduplicate_ofNavigation { get; set; } = new List<lead>();
 
     public virtual ICollection<appointment> appointments { get; set; } = new List<appointment>();

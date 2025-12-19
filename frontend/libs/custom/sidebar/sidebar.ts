@@ -59,7 +59,7 @@ export class AppSidebar {
   protected readonly _items = [
     {
       title: 'Dashboard',
-      url: '',
+      url: '/dashboard',
       icon: 'lucideChartPie',
     },
     {
