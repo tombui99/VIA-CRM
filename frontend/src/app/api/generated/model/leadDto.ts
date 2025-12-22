@@ -30,6 +30,7 @@ export interface LeadDto {
     assigned_user_id?: number | null;
     assigned_team_id?: number | null;
     created_by?: number | null;
+    created_at?: string | null;
     is_duplicate?: boolean | null;
     duplicate_of?: number | null;
     inverseduplicate_ofNavigation?: Array<Lead> | null;

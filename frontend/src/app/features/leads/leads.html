@@ -19,7 +19,53 @@
 </div>
 } @else if(hasResults()) {
 <div class="mb-4 mt-4 flex items-center">
-  <button hlmBtn (click)="openLeadFormSheet()">Add new lead</button>
+  <hlm-tabs tab="account" class="w-full">
+    <hlm-tabs-list aria-label="tabs example">
+      <button hlmTabsTrigger="account">Add new lead</button>
+      <button hlmTabsTrigger="password">Import CSV</button>
+    </hlm-tabs-list>
+    <div hlmTabsContent="account">
+      <section hlmCard>
+        <div hlmCardHeader>
+          <h3 hlmCardTitle>Add a new lead</h3>
+          <p hlmCardDescription>Add a new lead here through form submission.</p>
+        </div>
+        <div hlmCardFooter>
+          <button hlmBtn (click)="openLeadFormSheet()">Add new lead</button>
+        </div>
+      </section>
+    </div>
+    <div hlmTabsContent="password">
+      <section hlmCard>
+        <div hlmCardHeader>
+          <h3 hlmCardTitle>Import Leads through CSV</h3>
+          <p hlmCardDescription>
+            Add new leads by importing CSV files. Ensure the file meets the correct format.
+          </p>
+        </div>
+        <!-- CSV Picker -->
+        <div hlmCardContent class="grid w-full max-w-sm items-center gap-3">
+          <input hlmInput id="csv" accept=".csv" (change)="onFileSelected($event)" type="file" />
+        </div>
+
+        <!-- Selected file info -->
+        @if(selectedFile) {
+        <div class="rounded-md border p-3 m-4 text-sm">
+          <div class="font-medium">
+            {{ selectedFile.name }}
+          </div>
+          <div class="text-muted-foreground">
+            {{ selectedFile.size / 1024 | number : '1.0-0' }} KB
+          </div>
+        </div>
+        }
+        <div hlmCardFooter>
+          <button hlmBtn [disabled]="!selectedFile" (click)="importCsv()">Upload & Import</button>
+        </div>
+      </section>
+    </div>
+  </hlm-tabs>
+
   <lead-sheet
     #leadSheetForm
     [lead]="selectedLead()"

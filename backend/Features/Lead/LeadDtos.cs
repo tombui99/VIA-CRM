@@ -26,6 +26,8 @@ public class LeadDto
 
     public long? created_by { get; set; }
 
+    public DateTime? created_at { get; set; }
+
     public bool? is_duplicate { get; set; }
 
     public long? duplicate_of { get; set; }
@@ -72,3 +74,21 @@ public class CreateUpdateLeadDto
     public long? assigned_user_id { get; set; }
     public long? assigned_team_id { get; set; }
 }
+
+public class LeadImportDto
+{
+    public string first_name { get; set; } = null!;
+    public string last_name { get; set; } = null!;
+    public string? phone { get; set; }
+    public string? email { get; set; }
+    public long assigned_user_id { get; set; }
+    public long source_id { get; set; }
+    public long region_id { get; set; }
+    public long center_id { get; set; }
+}
+
+public class LeadImportRequest
+{
+    public IFormFile file { get; set; } = null!;
+}
+
