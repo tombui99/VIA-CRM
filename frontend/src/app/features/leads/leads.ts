@@ -174,6 +174,12 @@ export class Leads {
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
+      accessorKey: 'email',
+      id: 'email',
+      header: 'Email',
+      cell: (info) => `<span>${info.getValue<string>()}</span>`,
+    },
+    {
       accessorKey: 'source_name',
       id: 'source_name',
       header: 'Source',
@@ -192,6 +198,12 @@ export class Leads {
       accessorKey: 'assigned_user_name',
       id: 'assigned_user_name',
       header: 'Assigned User',
+      cell: (info) => `<span>${info.getValue<string>()}</span>`,
+    },
+    {
+      accessorKey: 'center_name',
+      id: 'center_name',
+      header: 'Center',
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
