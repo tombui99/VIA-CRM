@@ -14,6 +14,8 @@ public class LeadDto
 
     public string? email { get; set; }
 
+    public long? priority_id { get; set; }
+
     public long? source_id { get; set; }
 
     public long? region_id { get; set; }
@@ -58,6 +60,7 @@ public class LeadDto
     public string? center_name { get; set; }
     public string? source_name { get; set; }
     public string? assigned_user_name { get; set; }
+    public string? priority { get; set; }
 }
 
 public class CreateUpdateLeadDto
@@ -66,7 +69,7 @@ public class CreateUpdateLeadDto
     public string last_name { get; set; } = null!;
     public string phone { get; set; } = null!;
     public string email { get; set; } = null!;
-
+    public long? priority_id { get; set; }
     public long? source_id { get; set; }
     public long? region_id { get; set; }
     public long? center_id { get; set; }

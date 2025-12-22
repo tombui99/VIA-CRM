@@ -29,6 +29,8 @@ public class LeadController : ControllerBase
         from source in sourceGroup.DefaultIfEmpty()
         join u in _db.users on l.assigned_user_id equals u.id into userGroup
         from user in userGroup.DefaultIfEmpty()
+        join p in _db.priorities on l.priority_id equals p.id into priorityGroup
+        from priority in priorityGroup.DefaultIfEmpty()
         select new LeadDto
         {
           id = l.id,
@@ -37,6 +39,7 @@ public class LeadController : ControllerBase
           phone = l.phone,
           email = l.email,
           source_id = l.source_id,
+          priority_id = l.priority_id,
           region_id = l.region_id,
           center_id = l.center_id,
           assigned_user_id = l.assigned_user_id,
@@ -48,7 +51,10 @@ public class LeadController : ControllerBase
           assigned_user_name = user != null
                 ? user.first_name + " " + user.last_name
                 : null,
-          created_at = l.created_at
+          created_at = l.created_at,
+          priority = priority != null
+                ? priority.name
+                : null
         }).ToListAsync();
 
     return Ok(leads);
@@ -73,6 +79,7 @@ public class LeadController : ControllerBase
       source_id = dto.source_id,
       region_id = dto.region_id,
       center_id = dto.center_id,
+      priority_id = dto.priority_id,
 
       assigned_user_id = dto.assigned_user_id,
       assigned_team_id = dto.assigned_team_id,
@@ -111,6 +118,7 @@ public class LeadController : ControllerBase
     lead.source_id = dto.source_id;
     lead.region_id = dto.region_id;
     lead.center_id = dto.center_id;
+    lead.priority_id = dto.priority_id;
 
     lead.assigned_user_id = dto.assigned_user_id;
     lead.assigned_team_id = dto.assigned_team_id;

@@ -24,6 +24,7 @@ export interface LeadDto {
     last_name?: string | null;
     phone?: string | null;
     email?: string | null;
+    priority_id?: number | null;
     source_id?: number | null;
     region_id?: number | null;
     center_id?: number | null;
@@ -47,5 +48,6 @@ export interface LeadDto {
     center_name?: string | null;
     source_name?: string | null;
     assigned_user_name?: string | null;
+    priority?: string | null;
 }
 

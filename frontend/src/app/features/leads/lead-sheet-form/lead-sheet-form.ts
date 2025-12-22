@@ -71,6 +71,25 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
               <input hlmInput type="text" id="phone" formControlName="phone" class="col-span-3" />
             </div>
             <div class="grid gap-3">
+              <label hlmLabel for="priority_id" class="text-right">Priority</label>
+              <brn-select
+                class="inline-block"
+                placeholder="Select an option"
+                formControlName="priority_id"
+              >
+                <hlm-select-trigger class="w-56">
+                  <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                  <!-- TODO: This should come from backend -->
+                  <hlm-option [value]="1">Urgent</hlm-option>
+                  <hlm-option [value]="2">High</hlm-option>
+                  <hlm-option [value]="3">Medium</hlm-option>
+                  <hlm-option [value]="4">Low</hlm-option>
+                </hlm-select-content>
+              </brn-select>
+            </div>
+            <div class="grid gap-3">
               <label hlmLabel for="source_id" class="text-right">Source</label>
               <brn-select
                 class="inline-block"
@@ -163,6 +182,7 @@ export class LeadSheetForm {
     last_name: ['', Validators.required],
     email: ['', Validators.required],
     phone: ['', Validators.required],
+    priority_id: [0, Validators.required],
     source_id: [0, Validators.required],
     center_id: [0, Validators.required],
     region_id: [0, Validators.required],

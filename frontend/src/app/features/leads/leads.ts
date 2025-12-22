@@ -140,11 +140,11 @@ export class Leads {
       cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
     },
     {
-      accessorKey: 'email',
-      id: 'email',
-      header: 'Email',
+      accessorKey: 'priority',
+      id: 'priority',
+      header: 'Priority',
       enableSorting: false,
-      cell: (info) => `<span>${info.getValue<string>()}</span>`,
+      cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
     },
     {
       accessorKey: 'phone',

@@ -12,6 +12,7 @@ import { Center } from './center';
 import { User } from './user';
 import { LeadNote } from './leadNote';
 import { LeadActivity } from './leadActivity';
+import { Priority } from './priority';
 import { Region } from './region';
 import { Team } from './team';
 import { Source } from './source';
@@ -24,6 +25,7 @@ export interface Lead {
     phone?: string | null;
     email?: string | null;
     source_id?: number | null;
+    priority_id?: number | null;
     region_id?: number | null;
     center_id?: number | null;
     assigned_user_id?: number | null;
@@ -42,6 +44,7 @@ export interface Lead {
     duplicate_ofNavigation?: Lead;
     lead_activities?: Array<LeadActivity> | null;
     lead_notes?: Array<LeadNote> | null;
+    priority?: Priority;
     region?: Region;
     source?: Source;
 }

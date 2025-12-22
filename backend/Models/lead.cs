@@ -17,6 +17,8 @@ public partial class lead
 
     public long? source_id { get; set; }
 
+    public long? priority_id { get; set; }
+
     public long? region_id { get; set; }
 
     public long? center_id { get; set; }
@@ -52,6 +54,8 @@ public partial class lead
     public virtual ICollection<lead_activity> lead_activities { get; set; } = new List<lead_activity>();
 
     public virtual ICollection<lead_note> lead_notes { get; set; } = new List<lead_note>();
+
+    public virtual priority? priority { get; set; }
 
     public virtual region? region { get; set; }
 

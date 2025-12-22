@@ -110,6 +110,8 @@ Make sure you have the following installed:
 
 4. To generate models and services from .NET:
 
+   **Important: Ensure you rebuild dotnet by running `dotnet build` first**
+
    ```bash
    npm run generate:api
    ```

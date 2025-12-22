@@ -24,6 +24,8 @@ public partial class CrmDbContext : DbContext
 
     public virtual DbSet<lead_note> lead_notes { get; set; }
 
+    public virtual DbSet<priority> priorities { get; set; }
+
     public virtual DbSet<region> regions { get; set; }
 
     public virtual DbSet<source> sources { get; set; }
@@ -126,15 +128,25 @@ public partial class CrmDbContext : DbContext
 
             entity.HasIndex(e => e.assigned_user_id, "idx_leads_assigned_user");
 
+            entity.HasIndex(e => e.created_at, "idx_leads_created_at");
+
             entity.HasIndex(e => e.duplicate_of, "idx_leads_duplicate_of");
+
+            entity.HasIndex(e => e.priority_id, "idx_leads_priority_id");
 
             entity.HasIndex(e => new { e.source_id, e.region_id, e.center_id }, "idx_leads_source_region_center");
 
+            entity.Property(e => e.created_at)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
             entity.Property(e => e.email).HasMaxLength(255);
             entity.Property(e => e.first_name).HasMaxLength(100);
             entity.Property(e => e.is_duplicate).HasDefaultValueSql("'0'");
             entity.Property(e => e.last_name).HasMaxLength(100);
             entity.Property(e => e.phone).HasMaxLength(50);
+            entity.Property(e => e.updated_at)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.assigned_team).WithMany(p => p.leads)
                 .HasForeignKey(d => d.assigned_team_id)
@@ -160,6 +172,11 @@ public partial class CrmDbContext : DbContext
                 .HasForeignKey(d => d.duplicate_of)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_leads_duplicate_of");
+
+            entity.HasOne(d => d.priority).WithMany(p => p.leads)
+                .HasForeignKey(d => d.priority_id)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_leads_priority");
 
             entity.HasOne(d => d.region).WithMany(p => p.leads)
                 .HasForeignKey(d => d.region_id)
@@ -221,6 +238,24 @@ public partial class CrmDbContext : DbContext
                 .HasForeignKey(d => d.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_lead_notes_user");
+        });
+
+        modelBuilder.Entity<priority>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PRIMARY");
+
+            entity.ToTable("priority");
+
+            entity.HasIndex(e => e.name, "uq_priority_name").IsUnique();
+
+            entity.Property(e => e.created_at)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.name).HasMaxLength(50);
+            entity.Property(e => e.updated_at)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
         });
 
         modelBuilder.Entity<region>(entity =>
