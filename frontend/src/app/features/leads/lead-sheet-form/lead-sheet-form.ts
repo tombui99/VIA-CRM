@@ -26,7 +26,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
   providers: [provideIcons({ lucideCross })],
   template: `
     <hlm-sheet #sheetRef side="right">
-      <hlm-sheet-content *brnSheetContent="let ctx">
+      <hlm-sheet-content *brnSheetContent="let ctx" class="overflow-auto">
         <hlm-sheet-header>
           @if (lead()) {
           <h3 hlmSheetTitle>Edit lead</h3>
@@ -41,7 +41,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
           }
         </hlm-sheet-header>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
-          <div class="grid flex-1 auto-rows-min gap-6 px-4">
+          <div class="grid auto-rows-min gap-6 px-4">
             <div class="grid gap-3">
               <label hlmLabel for="first_name" class="text-right">First Name</label>
               <input
@@ -160,7 +160,7 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
               </brn-select>
             </div>
           </div>
-          <hlm-sheet-footer>
+          <hlm-sheet-footer class="mb-8">
             <button hlmBtn type="submit">Save Changes</button>
             <button brnSheetClose hlmBtn variant="outline">Close</button>
           </hlm-sheet-footer>
