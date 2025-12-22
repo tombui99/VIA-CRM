@@ -76,6 +76,8 @@
   [data]="leadsQuery.data()"
   [columns]="columns()"
   [options]="{ enableResizing: true, minSize: 60, maxSize: 800, tableId: 'leads-table' }"
+  [currentSort]="currentSort()"
+  (sortChange)="onSortChange($event)"
 >
 </custom-datatable>
 <ng-template #firstNameCell let-context>
@@ -85,6 +87,19 @@
     tabindex="0"
     (click)="openLeadFormSheet(context.row.original)"
     >{{ context.getValue() }}</span
+  >
+</ng-template>
+<ng-template #priorityCell let-context>
+  <!-- TODO: This logic can be cleaned up -->
+  <span
+    class="capitalize"
+    [class]="{
+      'text-destructive': context.getValue() === 1,
+      'text-orange-400': context.getValue() === 2,
+      'text-green-500': context.getValue() === 3,
+      'text-gray-500': context.getValue() === 4
+    }"
+    >{{ mapPriority(context.getValue()) }}</span
   >
 </ng-template>
 }

@@ -11,7 +11,7 @@ import {
 
 import { DatatableColumn, DatatableOptions, DatatableSortEvent } from './datatable.interfaces';
 import { ResizableCell, ResizableHeader } from './resizable-cell.directive';
-import { NgIcon } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   Cell,
   ColumnPinningState,
@@ -26,11 +26,13 @@ import {
 } from '@tanstack/angular-table';
 import { attemptSync } from '@libs/utils/attempt';
 import { hlm } from '@spartan-ng/helm/utils';
+import { lucideArrowDown, lucideArrowUp } from '@ng-icons/lucide';
 
 @Component({
   selector: 'custom-datatable',
   standalone: true,
   imports: [CommonModule, FlexRenderDirective, ResizableCell, ResizableHeader, NgIcon],
+  providers: [provideIcons({ lucideArrowUp, lucideArrowDown })],
   templateUrl: './datatable.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

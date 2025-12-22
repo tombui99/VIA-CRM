@@ -82,10 +82,10 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                 </hlm-select-trigger>
                 <hlm-select-content>
                   <!-- TODO: This should come from backend -->
-                  <hlm-option [value]="1">Urgent</hlm-option>
-                  <hlm-option [value]="2">High</hlm-option>
-                  <hlm-option [value]="3">Medium</hlm-option>
-                  <hlm-option [value]="4">Low</hlm-option>
+                  <hlm-option [value]="1">Hot</hlm-option>
+                  <hlm-option [value]="2">Warm</hlm-option>
+                  <hlm-option [value]="3">Cold</hlm-option>
+                  <hlm-option [value]="4">Death</hlm-option>
                 </hlm-select-content>
               </brn-select>
             </div>

@@ -4,7 +4,7 @@ import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
 import { CreateUpdateLeadDto, LeadDto, LeadService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
-import { Datatable, DatatableColumn } from '@libs/custom/datatable';
+import { Datatable, DatatableColumn, DatatableSortEvent } from '@libs/custom/datatable';
 import { LeadSheetForm } from './lead-sheet-form/lead-sheet-form';
 import { CellContext } from '@tanstack/angular-table';
 import { HlmButton } from '@spartan-ng/helm/button';
@@ -41,17 +41,39 @@ export class Leads {
   private readonly leadsService = winject(LeadService);
   private readonly datePipe = inject(DatePipe);
 
-  // Variables declaration
+  // Custom table cell
   firstNameCell =
     viewChild.required<TemplateRef<{ $implicit: CellContext<LeadDto, unknown> }>>('firstNameCell');
+  priorityCell =
+    viewChild.required<TemplateRef<{ $implicit: CellContext<LeadDto, unknown> }>>('priorityCell');
+
+  // Variables declaration
   leadSheetForm = viewChild<LeadSheetForm>('leadSheetForm');
   selectedLead = signal<LeadDto | null>(null);
   selectedFile?: File;
 
+  // Datatable sort logics
+  readonly sortField = signal('created_at');
+  readonly sortDirection = signal<'asc' | 'desc'>('desc');
+
+  readonly currentSort = computed(() => ({
+    field: this.sortField(),
+    direction: this.sortDirection(),
+  }));
+
+  onSortChange(event: DatatableSortEvent): void {
+    this.sortField.set(event.field);
+    this.sortDirection.set(event.direction);
+  }
+
+  private readonly sortQuery = computed(() => {
+    return this.sortDirection() || this.sortField();
+  });
+
   // Lead query
   readonly leadsQuery = injectQuery(() => ({
-    queryKey: ['leads'],
-    queryFn: () => this.leadsService.apiLeadsGet(),
+    queryKey: ['leads', this.sortQuery()],
+    queryFn: () => this.leadsService.apiLeadsGet(this.sortField(), this.sortDirection()),
   }));
 
   readonly hasResults = computed(() => (this.leadsQuery.data()?.length ?? 0) > 0);
@@ -127,7 +149,6 @@ export class Leads {
       accessorKey: 'first_name',
       id: 'first_name',
       header: 'First Name',
-      enableSorting: false,
       cell: () => {
         return this.firstNameCell();
       },
@@ -136,35 +157,32 @@ export class Leads {
       accessorKey: 'last_name',
       id: 'last_name',
       header: 'Last Name',
-      enableSorting: false,
       cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
     },
     {
-      accessorKey: 'priority',
-      id: 'priority',
+      accessorKey: 'priority_id',
+      id: 'priority_id',
       header: 'Priority',
-      enableSorting: false,
-      cell: (info) => `<span class="capitalize">${info.getValue<string>()}</span>`,
+      cell: () => {
+        return this.priorityCell();
+      },
     },
     {
       accessorKey: 'phone',
       id: 'phone',
       header: 'Phone',
-      enableSorting: false,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
       accessorKey: 'source_name',
       id: 'source_name',
       header: 'Source',
-      enableSorting: false,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
       accessorKey: 'created_at',
       id: 'created_at',
       header: 'Created at',
-      enableSorting: false,
       cell: (info) => {
         const date = (info.getValue() as string) ?? '';
         return this.datePipe.transform(date, 'short');
@@ -174,15 +192,29 @@ export class Leads {
       accessorKey: 'assigned_user_name',
       id: 'assigned_user_name',
       header: 'Assigned User',
-      enableSorting: false,
       cell: (info) => `<span>${info.getValue<string>()}</span>`,
     },
     {
       accessorKey: 'is_duplicate',
       id: 'is_duplicate',
       header: 'Is Duplicate',
-      enableSorting: false,
       cell: (info) => `<span>${info.getValue<string>() ? 'yes' : 'no'}</span>`,
     },
   ]);
+
+  // TODO: Hacky code - should map with backend table 'priority'
+  mapPriority(priorityId: number) {
+    switch (priorityId) {
+      case 1:
+        return 'Hot';
+      case 2:
+        return 'Warm';
+      case 3:
+        return 'Cold';
+      case 4:
+        return 'Death';
+      default:
+        return priorityId;
+    }
+  }
 }

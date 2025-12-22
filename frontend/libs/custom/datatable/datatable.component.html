@@ -49,9 +49,7 @@
               @if (isColumnSorted(header.column.id)) {
               <ng-icon
                 [name]="
-                  getSortDirection(header.column.id) === 'asc'
-                    ? 'faSolidArrowUp'
-                    : 'faSolidArrowDown'
+                  getSortDirection(header.column.id) === 'asc' ? 'lucideArrowUp' : 'lucideArrowDown'
                 "
                 size="16"
                 class="relative top-1"
