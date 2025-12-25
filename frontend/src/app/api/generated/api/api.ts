@@ -1,3 +1,5 @@
+export * from './appointments.service';
+import { AppointmentsService } from './appointments.service';
 export * from './dashboard.service';
 import { DashboardService } from './dashboard.service';
 export * from './lead.service';
@@ -8,4 +10,4 @@ export * from './parents.service';
 import { ParentsService } from './parents.service';
 export * from './user.service';
 import { UserService } from './user.service';
-export const APIS = [DashboardService, LeadService, LeadActivitiesService, ParentsService, UserService];
+export const APIS = [AppointmentsService, DashboardService, LeadService, LeadActivitiesService, ParentsService, UserService];

@@ -24,4 +24,6 @@ public partial class appointment
     public virtual user created_byNavigation { get; set; } = null!;
 
     public virtual lead lead { get; set; } = null!;
+
+    public virtual user user { get; set; } = null!;
 }

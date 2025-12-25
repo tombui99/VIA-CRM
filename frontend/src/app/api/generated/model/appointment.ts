@@ -23,5 +23,6 @@ export interface Appointment {
     center?: Center;
     created_byNavigation?: User;
     lead?: Lead;
+    user?: User;
 }
 

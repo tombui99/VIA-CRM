@@ -1,0 +1,22 @@
+<h2 [class]="hlmH2">Appointments</h2>
+@if(appointmentsQuery.error()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-destructive text-sm">
+    Error loading appointments: {{ appointmentsQuery.error()?.message }}
+  </div>
+</div>
+} @if (appointmentsQuery.isLoading()) {
+<div class="flex h-48 w-full items-center justify-center">
+  <div class="text-muted-foreground text-sm">Loading...</div>
+</div>
+} @else if(hasResults()) {
+<div class="mb-4 mt-4 flex items-center">
+  <button hlmBtn>Add new appointment</button>
+</div>
+<custom-datatable
+  [data]="appointmentsQuery.data()"
+  [columns]="columns()"
+  [options]="{ enableResizing: true, minSize: 60, maxSize: 800, tableId: 'users-table' }"
+>
+</custom-datatable>
+}
