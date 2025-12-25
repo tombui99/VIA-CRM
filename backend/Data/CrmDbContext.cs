@@ -24,6 +24,8 @@ public partial class CrmDbContext : DbContext
 
     public virtual DbSet<lead_note> lead_notes { get; set; }
 
+    public virtual DbSet<parent> parents { get; set; }
+
     public virtual DbSet<priority> priorities { get; set; }
 
     public virtual DbSet<region> regions { get; set; }
@@ -240,6 +242,26 @@ public partial class CrmDbContext : DbContext
                 .HasConstraintName("fk_lead_notes_user");
         });
 
+        modelBuilder.Entity<parent>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PRIMARY");
+
+            entity.UseCollation("utf8mb4_0900_ai_ci");
+
+            entity.HasIndex(e => e.lead_id, "idx_parents_leads");
+
+            entity.Property(e => e.dob).HasMaxLength(255);
+            entity.Property(e => e.name).HasMaxLength(255);
+            entity.Property(e => e.occupation).HasMaxLength(255);
+            entity.Property(e => e.parent_character).HasMaxLength(255);
+            entity.Property(e => e.phone).HasMaxLength(255);
+
+            entity.HasOne(d => d.lead).WithMany(p => p.parents)
+                .HasForeignKey(d => d.lead_id)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_parents_leads");
+        });
+
         modelBuilder.Entity<priority>(entity =>
         {
             entity.HasKey(e => e.id).HasName("PRIMARY");
@@ -276,7 +298,6 @@ public partial class CrmDbContext : DbContext
 
             entity.UseCollation("utf8mb4_0900_ai_ci");
 
-            entity.Property(e => e.channel).HasMaxLength(100);
             entity.Property(e => e.is_active).HasDefaultValueSql("'1'");
             entity.Property(e => e.name).HasMaxLength(255);
         });

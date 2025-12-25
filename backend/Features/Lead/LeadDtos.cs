@@ -52,11 +52,14 @@ public class LeadDto
 
     public virtual ICollection<lead_note> lead_notes { get; set; } = new List<lead_note>();
 
+    public virtual ICollection<parent> parents { get; set; } = new List<parent>();
+
     public virtual region? region { get; set; }
 
     public virtual source? source { get; set; }
 
     // extra field
+    public string? parent_name { get; set; }
     public string? center_name { get; set; }
     public string? source_name { get; set; }
     public string? assigned_user_name { get; set; }

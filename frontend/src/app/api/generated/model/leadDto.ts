@@ -11,6 +11,7 @@ import { Appointment } from './appointment';
 import { Center } from './center';
 import { User } from './user';
 import { LeadNote } from './leadNote';
+import { Parent } from './parent';
 import { LeadActivity } from './leadActivity';
 import { Lead } from './lead';
 import { Region } from './region';
@@ -43,8 +44,10 @@ export interface LeadDto {
     duplicate_ofNavigation?: Lead;
     lead_activities?: Array<LeadActivity> | null;
     lead_notes?: Array<LeadNote> | null;
+    parents?: Array<Parent> | null;
     region?: Region;
     source?: Source;
+    parent_name?: string | null;
     center_name?: string | null;
     source_name?: string | null;
     assigned_user_name?: string | null;

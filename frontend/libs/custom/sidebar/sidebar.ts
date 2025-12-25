@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
 import {
   lucideAudioWaveform,
+  lucideBookHeart,
   lucideCalendar,
   lucideChartPie,
   lucideMapPinHouse,
@@ -52,6 +53,7 @@ import { RouterLink } from '@angular/router';
       lucideMapPinHouse,
       lucideAudioWaveform,
       lucideNotebookPen,
+      lucideBookHeart,
     }),
   ],
 })
@@ -66,6 +68,11 @@ export class AppSidebar {
       title: 'Leads',
       url: '/leads',
       icon: 'lucideUserStar',
+    },
+    {
+      title: 'Parents',
+      url: '/parents',
+      icon: 'lucideBookHeart',
     },
     {
       title: 'Activities',

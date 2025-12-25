@@ -10,10 +10,14 @@
 import { Lead } from './lead';
 
 
-export interface Source { 
+export interface Parent { 
     id?: number;
     name?: string | null;
-    is_active?: boolean | null;
-    leads?: Array<Lead> | null;
+    phone?: string | null;
+    parent_character?: string | null;
+    occupation?: string | null;
+    dob?: string | null;
+    lead_id?: number | null;
+    lead?: Lead;
 }
 

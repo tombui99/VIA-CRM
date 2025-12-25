@@ -55,6 +55,8 @@ public partial class lead
 
     public virtual ICollection<lead_note> lead_notes { get; set; } = new List<lead_note>();
 
+    public virtual ICollection<parent> parents { get; set; } = new List<parent>();
+
     public virtual priority? priority { get; set; }
 
     public virtual region? region { get; set; }
