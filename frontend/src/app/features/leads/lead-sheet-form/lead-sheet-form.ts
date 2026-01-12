@@ -32,30 +32,30 @@ import { HlmButtonGroupImports } from '@spartan-ng/helm/button-group';
         *brnSheetContent="let ctx"
         class="w-[400px] sm:w-[540px] sm:max-w-none overflow-auto"
       >
-        <hlm-sheet-header>
-          @if (lead()) {
-          <h3 hlmSheetTitle>Edit lead</h3>
-          <p hlmSheetDescription>
-            Make changes to lead information here. Click save when you're done.
-          </p>
-          } @else {
-          <h3 hlmSheetTitle>Add new lead</h3>
-          <p hlmSheetDescription>
-            Make changes to add a new lead here. Click save when you're done.
-          </p>
-          }
-          <div hlmButtonGroup class="mt-4">
-            <button hlmBtn type="submit" size="sm">Save Changes</button>
-            @if (lead()) {
-            <button hlmBtn class="bg-emerald-500 hover:bg-emerald-400" size="sm">
-              Convert to new sale
-            </button>
-            <button hlmBtn variant="destructive" size="sm">Delete lead</button>
-            }
-            <button brnSheetClose hlmBtn variant="outline" size="sm">Cancel</button>
-          </div>
-        </hlm-sheet-header>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
+          <hlm-sheet-header>
+            @if (lead()) {
+            <h3 hlmSheetTitle>Edit lead</h3>
+            <p hlmSheetDescription>
+              Make changes to lead information here. Click save when you're done.
+            </p>
+            } @else {
+            <h3 hlmSheetTitle>Add new lead</h3>
+            <p hlmSheetDescription>
+              Make changes to add a new lead here. Click save when you're done.
+            </p>
+            }
+            <div hlmButtonGroup class="mt-4">
+              <button hlmBtn type="submit" size="sm">Save Changes</button>
+              @if (lead()) {
+              <button hlmBtn class="bg-emerald-500 hover:bg-emerald-400" size="sm">
+                Convert to new sale
+              </button>
+              <button hlmBtn variant="destructive" size="sm">Delete lead</button>
+              }
+              <button brnSheetClose hlmBtn variant="outline" size="sm">Cancel</button>
+            </div>
+          </hlm-sheet-header>
           <div class="grid auto-rows-min gap-6 px-4">
             <div class="grid gap-3">
               <label hlmLabel for="first_name" class="text-right">First Name</label>

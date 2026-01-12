@@ -15,6 +15,8 @@ import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
+import { HlmToasterImports } from '@spartan-ng/helm/sonner';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'spartan-data-table-preview',
@@ -30,6 +32,7 @@ import { lucideSearch } from '@ng-icons/lucide';
     HlmLabelImports,
     HlmInputImports,
     NgIcon,
+    HlmToasterImports,
   ],
   host: {
     class: 'w-full',
@@ -92,6 +95,7 @@ export class Leads {
     mutationFn: (payload: CreateUpdateLeadDto) => this.leadsService.apiLeadsPost(payload),
 
     onSuccess: () => {
+      toast('✅ Lead has been created');
       this.leadsQuery.refetch();
     },
   }));
@@ -106,6 +110,7 @@ export class Leads {
       this.leadsService.apiLeadsIdPatch(id, payload),
 
     onSuccess: () => {
+      toast('✅ Lead has been updated');
       this.leadsQuery.refetch();
     },
   }));
