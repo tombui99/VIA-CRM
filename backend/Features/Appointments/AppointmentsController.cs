@@ -48,7 +48,7 @@ public class AppointmentsController : ControllerBase
                     last_name = u.last_name
                 }
             }
-        ).ToListAsync();
+        ).AsNoTracking().ToListAsync();
 
         return Ok(appointments);
     }

@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { Appointment } from './appointment';
+import { Sale } from './sale';
 import { LeadNote } from './leadNote';
 import { LeadActivity } from './leadActivity';
 import { UserRole } from './userRole';
@@ -36,6 +37,7 @@ export interface User {
     leadcreated_byNavigations?: Array<Lead> | null;
     region?: Region;
     role?: UserRole;
+    sales?: Array<Sale> | null;
     team?: Team;
 }
 

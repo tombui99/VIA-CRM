@@ -8,6 +8,9 @@ import { CreateLeadActivityDto, LeadActivitiesService } from '../../api/generate
 import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { HlmDropdownMenuImports } from '@spartan-ng/helm/dropdown-menu';
 import { ActivitySheetForm } from './activity-sheet-form/activity-sheet-form';
+import { HlmInputImports } from '@spartan-ng/helm/input';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideSearch } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-lead-activities',
@@ -17,6 +20,13 @@ import { ActivitySheetForm } from './activity-sheet-form/activity-sheet-form';
     HlmButtonImports,
     HlmDropdownMenuImports,
     ActivitySheetForm,
+    HlmInputImports,
+    NgIcon,
+  ],
+  providers: [
+    provideIcons({
+      lucideSearch,
+    }),
   ],
   templateUrl: './lead-activities.html',
 })

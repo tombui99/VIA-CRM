@@ -20,4 +20,6 @@ public partial class parent
     public long? lead_id { get; set; }
 
     public virtual lead? lead { get; set; }
+
+    public virtual ICollection<sale> sales { get; set; } = new List<sale>();
 }

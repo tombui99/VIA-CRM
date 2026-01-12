@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { Appointment } from './appointment';
+import { Sale } from './sale';
 import { Center } from './center';
 import { User } from './user';
 import { LeadNote } from './leadNote';
@@ -48,6 +49,7 @@ export interface Lead {
     parents?: Array<Parent> | null;
     priority?: Priority;
     region?: Region;
+    sales?: Array<Sale> | null;
     source?: Source;
 }
 

@@ -72,6 +72,14 @@
     (submit)="handleLeadSubmit($event)"
   ></lead-sheet>
 </div>
+
+<div class="flex w-full max-w-sm items-center gap-2 mb-6">
+  <input class="w-80" hlmInput type="email" placeholder="Search leads..." />
+  <button hlmBtn variant="outline">
+    <ng-icon hlm name="lucideSearch" />
+  </button>
+</div>
+
 <custom-datatable
   [data]="leadsQuery.data()"
   [columns]="columns()"

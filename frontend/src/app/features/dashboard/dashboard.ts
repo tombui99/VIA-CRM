@@ -20,6 +20,11 @@ export class Dashboard {
   leadsOverTimeRef = viewChild<ElementRef<HTMLCanvasElement>>('leadsOverTime');
   activitiesByTypeRef = viewChild<ElementRef<HTMLCanvasElement>>('activitiesByType');
   activitiesByOutcomeRef = viewChild<ElementRef<HTMLCanvasElement>>('activitiesByOutcome');
+  userLeadsRef = viewChild<ElementRef<HTMLCanvasElement>>('userLeads');
+  userSalesRef = viewChild<ElementRef<HTMLCanvasElement>>('userSales');
+  contactedVsConvertedRef = viewChild<ElementRef<HTMLCanvasElement>>('contactedVsConverted');
+  conversionRateRef = viewChild<ElementRef<HTMLCanvasElement>>('conversionRate');
+  kpiByRoleRef = viewChild<ElementRef<HTMLCanvasElement>>('kpiByRole');
 
   dashboardService = winject(DashboardService);
 
@@ -27,6 +32,11 @@ export class Dashboard {
   private leadsOverTimeChart?: Chart;
   private activitiesByTypeChart?: Chart;
   private activitiesByOutcomeChart?: Chart;
+  private userLeadsChart?: Chart;
+  private userSalesChart?: Chart;
+  private contactedVsConvertedChart?: Chart;
+  private conversionRateChart?: Chart;
+  private kpiByRoleChart?: Chart;
 
   // Dashboard stats query
   readonly dashboardQuery = injectQuery(() => ({
@@ -121,6 +131,121 @@ export class Dashboard {
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // User Leads (Bar)
+    this.userLeadsChart?.destroy();
+
+    this.userLeadsChart = new Chart(this.userLeadsRef()?.nativeElement!, {
+      type: 'bar',
+      data: {
+        labels: data.userKpis.map((x: any) => x.userName),
+        datasets: [
+          {
+            label: 'Leads Assigned',
+            data: data.userKpis.map((x: any) => x.leadsAssigned),
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // User Sales (Horizontal Bar)
+    this.userSalesChart?.destroy();
+
+    this.userSalesChart = new Chart(this.userSalesRef()?.nativeElement!, {
+      type: 'bar',
+      data: {
+        labels: data.userKpis.map((x: any) => x.userName),
+        datasets: [
+          {
+            label: 'Sales Value',
+            data: data.userKpis.map((x: any) => x.totalSalesValue),
+          },
+        ],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // Contacted vs Converted (Bar)
+    this.contactedVsConvertedChart?.destroy();
+
+    this.contactedVsConvertedChart = new Chart(this.contactedVsConvertedRef()?.nativeElement!, {
+      type: 'bar',
+      data: {
+        labels: data.userKpis.map((x: any) => x.userName),
+        datasets: [
+          {
+            label: 'Leads Contacted',
+            data: data.userKpis.map((x: any) => x.leadsContacted),
+          },
+          {
+            label: 'Leads Converted',
+            data: data.userKpis.map((x: any) => x.leadsConverted),
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // Conversion Rate (Horizontal Bar)
+    this.conversionRateChart?.destroy();
+
+    this.conversionRateChart = new Chart(this.conversionRateRef()?.nativeElement!, {
+      type: 'bar',
+      data: {
+        labels: data.userKpis.map((x: any) => x.userName),
+        datasets: [
+          {
+            label: 'Conversion Rate (%)',
+            data: data.userKpis.map((x: any) => x.conversionRate),
+          },
+        ],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            max: 100,
+            ticks: {
+              callback: (value) => value + '%',
+            },
+          },
+        },
+      },
+    });
+
+    // KPI by Role (Horizontal Bar)
+    this.kpiByRoleChart?.destroy();
+
+    this.kpiByRoleChart = new Chart(this.kpiByRoleRef()?.nativeElement!, {
+      type: 'bar',
+      data: {
+        labels: data.roleKpis.map((x: any) => x.role),
+        datasets: [
+          {
+            label: 'Leads Assigned',
+            data: data.roleKpis.map((x: any) => x.leadsAssigned),
+          },
+        ],
+      },
+      options: {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
       },

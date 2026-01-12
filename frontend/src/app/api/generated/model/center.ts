@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { Appointment } from './appointment';
+import { Sale } from './sale';
 import { Lead } from './lead';
 import { Region } from './region';
 import { Team } from './team';
@@ -21,6 +22,7 @@ export interface Center {
     appointments?: Array<Appointment> | null;
     leads?: Array<Lead> | null;
     region?: Region;
+    sales?: Array<Sale> | null;
     teams?: Array<Team> | null;
 }
 

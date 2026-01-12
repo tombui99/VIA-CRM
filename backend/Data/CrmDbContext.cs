@@ -30,6 +30,8 @@ public partial class CrmDbContext : DbContext
 
     public virtual DbSet<region> regions { get; set; }
 
+    public virtual DbSet<sale> sales { get; set; }
+
     public virtual DbSet<source> sources { get; set; }
 
     public virtual DbSet<team> teams { get; set; }
@@ -290,6 +292,50 @@ public partial class CrmDbContext : DbContext
 
             entity.Property(e => e.code).HasMaxLength(50);
             entity.Property(e => e.name).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<sale>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PRIMARY");
+
+            entity.HasIndex(e => e.center_id, "idx_sales_center");
+
+            entity.HasIndex(e => e.lead_id, "idx_sales_lead");
+
+            entity.HasIndex(e => e.parent_id, "idx_sales_parent");
+
+            entity.HasIndex(e => e.assigned_user_id, "idx_sales_user");
+
+            entity.Property(e => e.created_at)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.sale_value).HasPrecision(12, 2);
+            entity.Property(e => e.status)
+                .HasDefaultValueSql("'pending'")
+                .HasColumnType("enum('pending','paid','cancelled','refunded')");
+            entity.Property(e => e.updated_at)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.assigned_user).WithMany(p => p.sales)
+                .HasForeignKey(d => d.assigned_user_id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sales_user");
+
+            entity.HasOne(d => d.center).WithMany(p => p.sales)
+                .HasForeignKey(d => d.center_id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sales_center");
+
+            entity.HasOne(d => d.lead).WithMany(p => p.sales)
+                .HasForeignKey(d => d.lead_id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sales_lead");
+
+            entity.HasOne(d => d.parent).WithMany(p => p.sales)
+                .HasForeignKey(d => d.parent_id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sales_parent");
         });
 
         modelBuilder.Entity<source>(entity =>

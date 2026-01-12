@@ -61,5 +61,7 @@ public partial class lead
 
     public virtual region? region { get; set; }
 
+    public virtual ICollection<sale> sales { get; set; } = new List<sale>();
+
     public virtual source? source { get; set; }
 }

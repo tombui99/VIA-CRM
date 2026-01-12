@@ -16,11 +16,39 @@
 </div>
 }
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 p-6">
   <div class="rounded-2xl bg-white p-4 shadow-sm">
-    <h3 class="text-sm font-semibold mb-2">Leads by Source</h3>
+    <h3 class="text-sm font-semibold mb-2">Leads Assigned per User</h3>
     <div class="chart-box">
-      <canvas #leadsBySource></canvas>
+      <canvas #userLeads></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Leads Contacted vs Converted per User</h3>
+    <div class="chart-box">
+      <canvas #contactedVsConverted></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Conversion Rate per User</h3>
+    <div class="chart-box">
+      <canvas #conversionRate></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Sales Value per User</h3>
+    <div class="chart-box">
+      <canvas #userSales></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Sales Value by Role</h3>
+    <div class="chart-box">
+      <canvas #kpiByRole></canvas>
     </div>
   </div>
 
@@ -28,6 +56,13 @@
     <h3 class="text-sm font-semibold mb-2">Leads Over Time</h3>
     <div class="chart-box">
       <canvas #leadsOverTime></canvas>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white p-4 shadow-sm">
+    <h3 class="text-sm font-semibold mb-2">Leads by Source</h3>
+    <div class="chart-box">
+      <canvas #leadsBySource></canvas>
     </div>
   </div>
 

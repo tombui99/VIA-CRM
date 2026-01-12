@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Sale } from './sale';
 import { Lead } from './lead';
 
 
@@ -19,5 +20,6 @@ export interface Parent {
     dob?: string | null;
     lead_id?: number | null;
     lead?: Lead;
+    sales?: Array<Sale> | null;
 }
 

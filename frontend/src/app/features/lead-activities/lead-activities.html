@@ -21,6 +21,13 @@
   <div class="text-muted-foreground text-sm">Loading...</div>
 </div>
 } @else if(hasResults()) {
+<div class="flex w-full max-w-sm items-center gap-2 mb-6 mt-6">
+  <input class="w-80" hlmInput type="email" placeholder="Search activities..." />
+  <button hlmBtn variant="outline">
+    <ng-icon hlm name="lucideSearch" />
+  </button>
+</div>
+
 <hlm-accordion type="single" collapsible class="w-full space-y-3 mt-4">
   @for (lead of leadActivitiesQuery.data(); track lead.id) {
   <hlm-accordion-item class="overflow-hidden rounded-xl border bg-background">
@@ -69,13 +76,14 @@
               <span class="text-sm font-medium">
                 {{ activity.activity_type }}
               </span>
-              <span class="text-xs text-muted-foreground">
-                {{ activity.created_at | date : 'short' }}
-              </span>
             </div>
-            <p class="mt-1 text-sm text-muted-foreground">
+            <p class="mt-1 text-muted-foreground">
               {{ activity.outcome }}
             </p>
+            <div class="text-sm text-muted-foreground mt-2">
+              Contacted by {{ activity.user?.first_name }} {{ activity.user?.last_name }} at
+              {{ activity.created_at | date : 'short' }}
+            </div>
           </li>
           } @empty {
           <p class="text-sm text-muted-foreground">No activities found.</p>

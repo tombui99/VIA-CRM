@@ -19,5 +19,7 @@ public partial class center
 
     public virtual region region { get; set; } = null!;
 
+    public virtual ICollection<sale> sales { get; set; } = new List<sale>();
+
     public virtual ICollection<team> teams { get; set; } = new List<team>();
 }

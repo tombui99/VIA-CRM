@@ -10,6 +10,7 @@ import { HlmSheetImports } from '@spartan-ng/helm/sheet';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { CreateUpdateLeadDto } from '../../../api/generated';
+import { HlmButtonGroupImports } from '@spartan-ng/helm/button-group';
 
 @Component({
   selector: 'lead-sheet',
@@ -22,11 +23,15 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
     ReactiveFormsModule,
     BrnSelectImports,
     HlmSelectImports,
+    HlmButtonGroupImports,
   ],
   providers: [provideIcons({ lucideCross })],
   template: `
     <hlm-sheet #sheetRef side="right">
-      <hlm-sheet-content *brnSheetContent="let ctx" class="overflow-auto">
+      <hlm-sheet-content
+        *brnSheetContent="let ctx"
+        class="w-[400px] sm:w-[540px] sm:max-w-none overflow-auto"
+      >
         <hlm-sheet-header>
           @if (lead()) {
           <h3 hlmSheetTitle>Edit lead</h3>
@@ -39,6 +44,16 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
             Make changes to add a new lead here. Click save when you're done.
           </p>
           }
+          <div hlmButtonGroup class="mt-4">
+            <button hlmBtn type="submit" size="sm">Save Changes</button>
+            @if (lead()) {
+            <button hlmBtn class="bg-emerald-500 hover:bg-emerald-400" size="sm">
+              Convert to new sale
+            </button>
+            <button hlmBtn variant="destructive" size="sm">Delete lead</button>
+            }
+            <button brnSheetClose hlmBtn variant="outline" size="sm">Cancel</button>
+          </div>
         </hlm-sheet-header>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="grid auto-rows-min gap-6 px-4">
@@ -153,17 +168,14 @@ import { CreateUpdateLeadDto } from '../../../api/generated';
                 </hlm-select-trigger>
                 <hlm-select-content>
                   <!-- TODO: This should come from backend -->
-                  <hlm-option [value]="1">Tom Bui</hlm-option>
+                  <hlm-option [value]="1">Minh Bui</hlm-option>
                   <hlm-option [value]="2">Linh Nguyen</hlm-option>
                   <hlm-option [value]="3">Minh Tran</hlm-option>
+                  <hlm-option [value]="4">Thanh Nguyen</hlm-option>
                 </hlm-select-content>
               </brn-select>
             </div>
           </div>
-          <hlm-sheet-footer class="mb-8">
-            <button hlmBtn type="submit">Save Changes</button>
-            <button brnSheetClose hlmBtn variant="outline">Close</button>
-          </hlm-sheet-footer>
         </form>
       </hlm-sheet-content>
     </hlm-sheet>

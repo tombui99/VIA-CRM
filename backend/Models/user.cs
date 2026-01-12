@@ -41,5 +41,7 @@ public partial class user
 
     public virtual user_role role { get; set; } = null!;
 
+    public virtual ICollection<sale> sales { get; set; } = new List<sale>();
+
     public virtual team? team { get; set; }
 }

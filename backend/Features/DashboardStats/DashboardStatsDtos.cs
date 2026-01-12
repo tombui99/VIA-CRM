@@ -4,6 +4,8 @@ public class DashboardStatsDto
     public List<DateCountDto> LeadsByDate { get; set; } = [];
     public List<LabelCountDto> ActivitiesByType { get; set; } = [];
     public List<LabelCountDto> ActivitiesByOutcome { get; set; } = [];
+    public List<UserKpiDto> UserKpis { get; set; } = [];
+    public List<RoleKpiDto> RoleKpis { get; set; } = [];
 }
 
 public class LabelCountDto

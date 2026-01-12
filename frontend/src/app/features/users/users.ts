@@ -6,10 +6,18 @@ import { UserDto, UserService } from '../../api/generated';
 import { winject } from '@libs/utils/winject';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { Datatable, DatatableColumn } from '@libs/custom/datatable';
+import { HlmInputImports } from '@spartan-ng/helm/input';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideSearch } from '@ng-icons/lucide';
 
 @Component({
   selector: 'spartan-data-table-preview',
-  imports: [FormsModule, HlmButtonImports, Datatable],
+  imports: [FormsModule, HlmButtonImports, Datatable, HlmInputImports, NgIcon],
+  providers: [
+    provideIcons({
+      lucideSearch,
+    }),
+  ],
   host: {
     class: 'w-full',
   },

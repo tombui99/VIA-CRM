@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
 import {
   lucideAudioWaveform,
+  lucideBanknoteArrowUp,
   lucideBookHeart,
   lucideCalendar,
   lucideChartPie,
+  lucideCircleUser,
   lucideMapPinHouse,
   lucideNotebookPen,
   lucideUsers,
@@ -12,11 +14,11 @@ import {
 } from '@ng-icons/lucide';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [HlmSidebarImports, NgIcon, HlmIcon, RouterLink],
+  imports: [HlmSidebarImports, NgIcon, HlmIcon, RouterLink, RouterLinkActive],
   template: `
     <div hlmSidebarWrapper>
       <hlm-sidebar>
@@ -28,17 +30,34 @@ import { RouterLink } from '@angular/router';
             <div hlmSidebarGroupLabel>Application</div>
             <div hlmSidebarGroupContent>
               <ul hlmSidebarMenu>
-                @for(item of _items; track item.title){
+                @for(item of _items; track item.title){ @if(!item.isHidden) {
                 <li hlmSidebarMenuItem>
-                  <a hlmSidebarMenuButton [routerLink]="item.url">
+                  <a
+                    hlmSidebarMenuButton
+                    [routerLink]="item.url"
+                    routerLinkActive="text-blue-500 font-bold"
+                  >
                     <ng-icon hlm [name]="item.icon" />
                     <span>{{ item.title }}</span>
                   </a>
                 </li>
-                }
+                } }
               </ul>
             </div>
           </div>
+        </div>
+        <div hlmSidebarFooter class="mb-4">
+          <a hlmSidebarMenuButton size="lg" href="#">
+            <div
+              class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+            >
+              <ng-icon name="lucideCircleUser" class="text-base" />
+            </div>
+            <!-- TODO: Dummy hardcoded data should be replaced -->
+            <div class="grid flex-1 text-left text-sm leading-tight">
+              <span class="truncate font-medium">Tom Bui</span>
+            </div>
+          </a>
         </div>
       </hlm-sidebar>
       <ng-content />
@@ -54,6 +73,8 @@ import { RouterLink } from '@angular/router';
       lucideAudioWaveform,
       lucideNotebookPen,
       lucideBookHeart,
+      lucideCircleUser,
+      lucideBanknoteArrowUp,
     }),
   ],
 })
@@ -98,6 +119,12 @@ export class AppSidebar {
       title: 'Appointments',
       url: '/appointments',
       icon: 'lucideCalendar',
+      isHidden: false,
+    },
+    {
+      title: 'Sales',
+      url: '/sales',
+      icon: 'lucideBanknoteArrowUp',
     },
   ];
 }

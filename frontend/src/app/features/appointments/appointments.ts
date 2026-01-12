@@ -6,12 +6,20 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { Datatable, DatatableColumn } from '@libs/custom/datatable';
 import { DatePipe } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideSearch } from '@ng-icons/lucide';
+import { HlmInputImports } from '@spartan-ng/helm/input';
 
 @Component({
   selector: 'app-appointments',
-  imports: [HlmButtonImports, Datatable],
+  imports: [HlmButtonImports, Datatable, NgIcon, HlmInputImports],
   templateUrl: './appointments.html',
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    provideIcons({
+      lucideSearch,
+    }),
+  ],
 })
 export class Appointments {
   hlmH2 = hlmH2;

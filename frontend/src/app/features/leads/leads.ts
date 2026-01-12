@@ -13,6 +13,8 @@ import { HlmInputImports } from '@spartan-ng/helm/input';
 import { HlmTabsImports } from '@spartan-ng/helm/tabs';
 import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideSearch } from '@ng-icons/lucide';
 
 @Component({
   selector: 'spartan-data-table-preview',
@@ -26,11 +28,18 @@ import { HlmLabelImports } from '@spartan-ng/helm/label';
     HlmTabsImports,
     HlmCardImports,
     HlmLabelImports,
+    HlmInputImports,
+    NgIcon,
   ],
   host: {
     class: 'w-full',
   },
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    provideIcons({
+      lucideSearch,
+    }),
+  ],
   templateUrl: './leads.html',
 })
 export class Leads {

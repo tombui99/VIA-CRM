@@ -13,6 +13,12 @@
 <div class="mb-4 mt-4 flex items-center">
   <button hlmBtn>Add new parent</button>
 </div>
+<div class="flex w-full max-w-sm items-center gap-2 mb-6">
+  <input class="w-80" hlmInput type="email" placeholder="Search parents..." />
+  <button hlmBtn variant="outline">
+    <ng-icon hlm name="lucideSearch" />
+  </button>
+</div>
 <custom-datatable
   [data]="parentsQuery.data()"
   [columns]="columns()"

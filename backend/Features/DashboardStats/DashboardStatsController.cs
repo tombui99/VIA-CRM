@@ -24,7 +24,9 @@ public class DashboardController : ControllerBase
             LeadsBySource = await GetLeadsBySource(),
             LeadsByDate = await GetLeadsByDate(),
             ActivitiesByType = await GetActivitiesByType(),
-            ActivitiesByOutcome = await GetActivitiesByOutcome()
+            ActivitiesByOutcome = await GetActivitiesByOutcome(),
+            UserKpis = await GetUserKpis(),
+            RoleKpis = await GetRoleKpis()
         };
 
         return Ok(stats);
@@ -45,6 +47,7 @@ public class DashboardController : ControllerBase
             }
         )
         .OrderByDescending(x => x.Count)
+        .AsNoTracking()
         .ToListAsync();
     }
 
@@ -59,6 +62,7 @@ public class DashboardController : ControllerBase
                 Count = g.Count()
             })
             .OrderBy(x => x.Date)
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -72,6 +76,7 @@ public class DashboardController : ControllerBase
                 Count = g.Count()
             })
             .OrderByDescending(x => x.Count)
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -85,7 +90,113 @@ public class DashboardController : ControllerBase
                 Count = g.Count()
             })
             .OrderByDescending(x => x.Count)
+            .AsNoTracking()
             .ToListAsync();
     }
 
+    private async Task<List<UserKpiDto>> GetUserKpis()
+    {
+        var raw = await (
+            from u in _db.users
+
+            select new
+            {
+                UserId = u.id,
+                UserName = u.first_name + " " + u.last_name,
+
+                // -------------------------
+                // LEADS KPIs (lead owner)
+                // -------------------------
+                LeadsAssigned = _db.leads.Count(l => l.assigned_user_id == u.id),
+
+                LeadsContacted = (
+                    from l in _db.leads
+                    join a in _db.lead_activities on l.id equals a.lead_id
+                    where l.assigned_user_id == u.id
+                    select l.id
+                ).Distinct().Count(),
+
+                LeadsConverted = (
+                    from s in _db.sales
+                    where s.assigned_user_id == u.id
+                    select s.lead_id
+                ).Distinct().Count(),
+
+                // -------------------------
+                // SALES KPIs (sale owner) ✅
+                // -------------------------
+                TotalSalesValue = (
+                    from s in _db.sales
+                    where s.assigned_user_id == u.id
+                    select (decimal?)s.sale_value
+                ).Sum()
+            }
+        ).AsNoTracking().ToListAsync();
+
+        return raw
+            .Select(x => new UserKpiDto
+            {
+                UserId = x.UserId,
+                UserName = x.UserName,
+
+                LeadsAssigned = x.LeadsAssigned,
+                LeadsContacted = x.LeadsContacted,
+                LeadsConverted = x.LeadsConverted,
+
+                TotalSalesValue = x.TotalSalesValue ?? 0m,
+
+                ConversionRate = x.LeadsAssigned == 0
+                    ? 0
+                    : Math.Round(
+                        (decimal)x.LeadsConverted / x.LeadsAssigned * 100m,
+                        2
+                    )
+            })
+            .OrderByDescending(x => x.TotalSalesValue)
+            .ToList();
+    }
+    private async Task<List<RoleKpiDto>> GetRoleKpis()
+    {
+        return await (
+            from r in _db.user_roles
+            join u in _db.users on r.id equals u.role_id
+
+            group new { r, u } by r.name into g
+
+            select new RoleKpiDto
+            {
+                Role = g.Key,
+                Users = g.Count(),
+
+                // Leads owned by users in this role
+                LeadsAssigned = (
+                    from l in _db.leads
+                    join gu in g.Select(x => x.u.id)
+                        on l.assigned_user_id equals gu
+                    select l.id
+                ).Count(),
+
+                LeadsConverted = (
+                    from l in _db.leads
+                    join gu in g.Select(x => x.u.id)
+                        on l.assigned_user_id equals gu
+                    join s in _db.sales on l.id equals s.lead_id
+                    where s.parent_id == null
+                    select l.id
+                ).Distinct().Count(),
+
+                // Sales CLOSED by users in this role
+                TotalSalesValue = (
+                    from s in _db.sales
+                    join gu in g.Select(x => x.u.id)
+                        on s.assigned_user_id equals gu
+                    where s.parent_id == null
+                    select (decimal?)s.sale_value
+                ).Sum() ?? 0m
+            }
+        )
+        .OrderByDescending(x => x.TotalSalesValue)
+        .AsNoTracking()
+        .ToListAsync();
+    }
 }

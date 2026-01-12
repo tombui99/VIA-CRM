@@ -20,6 +20,7 @@ public class LeadActivitiesController : ControllerBase
     public async Task<ActionResult<List<LeadActivitiesDto>>> GetLeadActivities()
     {
         var leads = await _db.leads
+            .AsNoTracking()
             .Select(l => new LeadActivitiesDto
             {
                 id = l.id,
@@ -37,24 +38,31 @@ public class LeadActivitiesController : ControllerBase
                 is_duplicate = l.is_duplicate,
                 duplicate_of = l.duplicate_of,
 
-                activities = _db.lead_activities
-                    .Where(a => a.lead_id == l.id)
-                    .OrderByDescending(a => a.created_at)
-                    .Select(a => new lead_activity
+                activities = (
+                    from a in _db.lead_activities
+                    join u in _db.users on a.user_id equals u.id
+                    where a.lead_id == l.id
+                    orderby a.created_at ascending
+                    select new lead_activity
                     {
                         id = a.id,
                         lead_id = a.lead_id,
                         user_id = a.user_id,
+
+                        user = u,
+
                         activity_type = a.activity_type,
                         outcome = a.outcome,
-                        created_at = a.created_at,
-                    })
-                    .ToList()
+                        created_at = a.created_at
+                    }
+                ).ToList()
             })
+            .AsNoTracking()
             .ToListAsync();
 
         return Ok(leads);
     }
+
 
     [HttpPost]
     public async Task<ActionResult<long>> Create(CreateLeadActivityDto dto)

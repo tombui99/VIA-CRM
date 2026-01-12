@@ -14,6 +14,7 @@ export * from './leadNote';
 export * from './parent';
 export * from './priority';
 export * from './region';
+export * from './sale';
 export * from './source';
 export * from './team';
 export * from './updateLeadActivityDto';

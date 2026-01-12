@@ -42,7 +42,7 @@ public class ParentsController : ControllerBase
                     email = l.email
                 }
             }
-        ).ToListAsync();
+        ).AsNoTracking().ToListAsync();
 
         return Ok(parents);
     }
