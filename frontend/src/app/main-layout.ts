@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppSidebar } from '@libs/custom/sidebar/sidebar';
 import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
+import { HlmToasterImports } from '@spartan-ng/helm/sonner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppSidebar, HlmSidebarImports],
+  imports: [RouterOutlet, AppSidebar, HlmSidebarImports, HlmToasterImports],
   template: `
     <div class="min-h-screen">
       <app-sidebar>
@@ -17,6 +18,7 @@ import { HlmSidebarImports } from '@spartan-ng/helm/sidebar';
         </main>
       </app-sidebar>
     </div>
+    <hlm-toaster />
   `,
 })
 export class MainLayoutComponent {}

@@ -15,7 +15,6 @@ import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmToasterImports } from '@spartan-ng/helm/sonner';
 import { toast } from 'ngx-sonner';
 
 @Component({
@@ -32,7 +31,6 @@ import { toast } from 'ngx-sonner';
     HlmLabelImports,
     HlmInputImports,
     NgIcon,
-    HlmToasterImports,
   ],
   host: {
     class: 'w-full',
