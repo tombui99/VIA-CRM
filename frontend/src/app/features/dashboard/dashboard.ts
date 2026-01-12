@@ -3,7 +3,8 @@ import { Chart, registerables } from 'chart.js';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { winject } from '@libs/utils/winject';
 import { DashboardService } from '../../api/generated';
-import { hlmH2, hlmH3 } from '@spartan-ng/helm/typography';
+import { hlmH2 } from '@spartan-ng/helm/typography';
+import { DateTime } from 'luxon';
 
 Chart.register(...registerables);
 
@@ -82,7 +83,9 @@ export class Dashboard {
     this.leadsOverTimeChart = new Chart(this.leadsOverTimeRef()?.nativeElement!, {
       type: 'line',
       data: {
-        labels: data.leadsByDate?.map((x: any) => x.date),
+        labels: data.leadsByDate?.map(
+          (x: any) => DateTime.fromISO(x.date).setZone('Asia/Ho_Chi_Minh').toFormat('dd LLL yyyy') // e.g. 08 Jan 2026
+        ),
         datasets: [
           {
             label: 'Leads',
