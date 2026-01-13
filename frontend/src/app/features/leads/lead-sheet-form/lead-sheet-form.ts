@@ -172,6 +172,7 @@ import { HlmButtonGroupImports } from '@spartan-ng/helm/button-group';
                   <hlm-option [value]="2">Linh Nguyen</hlm-option>
                   <hlm-option [value]="3">Minh Tran</hlm-option>
                   <hlm-option [value]="4">Thanh Nguyen</hlm-option>
+                  <hlm-option [value]="5">Duong Nguyen</hlm-option>
                 </hlm-select-content>
               </brn-select>
             </div>
